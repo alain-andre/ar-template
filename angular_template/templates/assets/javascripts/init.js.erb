@@ -1,0 +1,8 @@
+// module pour les controleurs de projects
+var projectsModuleControllers = angular.module('projectsModuleControllers', []);
+var defaultModuleControllers = angular.module('defaultModuleControllers', []);
+
+// Création de l'application
+var maSuperApp = angular.module('maSuperApp', ['ngRoute', 
+  'projectsModuleControllers', 'defaultModuleControllers'
+]);

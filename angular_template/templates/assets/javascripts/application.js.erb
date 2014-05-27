@@ -1,0 +1,11 @@
+/**
+ * Définition des routes
+ */
+#{app_name}.config(['$routeProvider',
+  function($routeProvider){
+    $routeProvider.
+      otherwise({
+        redirectTo: '/'
+      });
+  }
+]);
