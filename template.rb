@@ -1,3 +1,5 @@
+# vars
+@appName = @app_name.camelize(:lower)
 
 # gem
 FileUtils.cp(File.expand_path(File.dirname(__FILE__))+"/defaults/Gemfile_", "Gemfile")
@@ -32,11 +34,11 @@ gsub_file 'app/assets/javascripts/application.js', /\/\/_ujs/, "//"
 
 #
 say "Configuration de l'application angularjs"
-gsub_file 'app/views/layouts/application.html.erb', /<html>/, "<html lang=\"fr\" ng-app=\"#{@app_name}\">"
+gsub_file 'app/views/layouts/application.html.erb', /<html>/, "<html lang=\"fr\" ng-app=\"#{@appName}\">"
 
 File.new("app/assets/javascripts/init.js", "w")
 append_to_file 'app/assets/javascripts/init.js' do
-  "'use strict';\n\t// initialisation de l'application\n\tvar #{@app_name} = angular.module('#{@app_name}', ['ngRoute', 'angular.ujs']);"
+  "'use strict';\n\t// initialisation de l'application\n\tvar #{@appName} = angular.module('#{@appName}', ['ngRoute', 'angular.ujs']);"
 end
 
 inject_into_file 'app/assets/javascripts/application.js', :before => "//= require_tree ." do
@@ -77,7 +79,7 @@ file = File.open(File.expand_path(File.dirname(__FILE__))+"/defaults/application
 inject_into_file 'app/assets/javascripts/application.js', :after => "//= require_tree ." do
   "\n\n"+file.read
 end
-gsub_file 'app/assets/javascripts/application.js', /app_name/, "#{@app_name}"
+gsub_file 'app/assets/javascripts/application.js', /app_name/, "#{@appName}"
 
 #
 say "Ajout du dossier templates dans la configuration assets"
