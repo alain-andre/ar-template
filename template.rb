@@ -103,7 +103,7 @@ directory File.expand_path(File.dirname(__FILE__))+"/angular_template", "lib/gen
 
 # Ajout du generateur de scaffold
 inject_into_file 'config/application.rb', :after => "Rails::Application" do
-  "\n\t\tconfig.generators do |g|\n\t\t\tg.orm :active_record\n\t\t\tg.template_engine :haml\n\t\t\tg.test_framework :test_unit\n\t\t\tg.stylesheets false\n\t\t\tg.javascripts false\n\t\t\tg.angularjs :angular_template\n\t\tend\n"
+  "\n\t\tconfig.generators do |g|\n\t\t\tg.orm :active_record\n\t\t\tg.test_framework :test_unit\n\t\t\tg.assets false\n\t\tend\n"
 end
 
 git add: "-A"
