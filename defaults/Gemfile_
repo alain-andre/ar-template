@@ -48,3 +48,6 @@ gem 'i18n', '~> 0.6.9'
 
 # Ruby on Rails replacement for unobtrusive scripting library implemented in AngularJS"
 gem 'angular-ujs', '~> 0.4.13'
+
+# Haml (HTML Abstraction Markup Language) is a layer on top of HTML or XML
+gem 'haml', '~> 4.0.5'
