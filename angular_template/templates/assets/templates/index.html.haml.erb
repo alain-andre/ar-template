@@ -1,0 +1,19 @@
+
+  %h4 Liste des <%= class_name.pluralize %>
+
+  %div
+    %ul
+      %li
+        %a{ "href" => "#/<%= class_name.pluralize %>/nil" } Nouveau <%= class_name %>
+      %li
+        Search:
+        %input{ "ng-model" => "<%= class_name %>Query" }
+      %li
+        Sort by:
+        %select{ "ng-model" => "<%= class_name %>Order" }
+          %option{ :value => "name" } Alphabétique
+          %option{ :value => "created_at" } Plus récent
+  %ul
+    %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
+      %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}" } {{<%= class_name %>.name}}
+      %p {{<%= class_name %>.detail}}

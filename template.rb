@@ -52,19 +52,22 @@ run "rails generate devise:install"
 inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
   "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"
 end
-gsub_file 'config/routes.rb', /# root 'welcome#index'/, "root 'welcome#index'"
 
 inject_into_file 'app/controllers/application_controller.rb', :after => "protect_from_forgery with: :exception" do
   "\n\tbefore_filter :authenticate_user!"
 end
 
-git add: "-A"
-git commit: '-m "rails generate devise:install + configurations"'
 run "rails generate devise User"
-run "rails generate devise:views"
 rake 'db:migrate'
+
+directory File.expand_path(File.dirname(__FILE__))+"/defaults/devise", "app/views/devise"
+
+inject_into_file 'config/application.rb', :after => "# config.i18n.default_locale = :de" do
+  "\n\t\tconfig.i18n.default_locale = :fr\n"
+end
+
 git add: "-A"
-git commit: '-m "Generation de User et devise:views"'
+git commit: '-m "Generation de User et devise:views + internationalisation"'
 
 file = File.open(File.expand_path(File.dirname(__FILE__))+"/defaults/application_yield", "rb")
 gsub_file 'app/views/layouts/application.html.erb', /<%= yield %>/, file.read
@@ -75,7 +78,6 @@ git commit: '-m "Ajout de la barre menu + messages dans app/views/layouts/applic
 #
 say "Création de l'architecture pour la gestion des templates angularjs"
 file = File.open(File.expand_path(File.dirname(__FILE__))+"/defaults/application_js", "rb")
-
 inject_into_file 'app/assets/javascripts/application.js', :after => "//= require_tree ." do
   "\n\n"+file.read
 end
@@ -101,10 +103,18 @@ git commit: '-m "Création de l\'architecture pour la gestion des templates angu
 say "Initialisation du generateur de scaffolding"
 directory File.expand_path(File.dirname(__FILE__))+"/angular_template", "lib/generators/angular_template"
 
-# Ajout du generateur de scaffold
+run "rails g controller home index --skip-assets"
+File.write('app/views/home/index.html.erb', "\n<div ng-view></div>")
+
+gsub_file 'config/routes.rb', /# root 'welcome#index'/, "root 'home#index'"
+
+# Modification des generateurs
 inject_into_file 'config/application.rb', :after => "Rails::Application" do
-  "\n\t\tconfig.generators do |g|\n\t\t\tg.orm :active_record\n\t\t\tg.test_framework :test_unit\n\t\t\tg.assets false\n\t\tend\n"
+  "\n\t\tconfig.generators do |g|\n\t\t\tg.template_engine false\n\t\t\tg.test_framework :test_unit\n\t\t\tg.assets false\n\t\tend\n"
 end
 
 git add: "-A"
-git commit: '-m "Initialisation du generateur de scaffolding"'
+git commit: '-m "Initialisation du generateur de scaffolding et de la route"'
+
+# transformation de tous les ers en haml
+run "rake haml:replace_erbs"

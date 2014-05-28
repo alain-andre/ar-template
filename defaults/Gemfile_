@@ -25,6 +25,8 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'erb2haml' # use rake haml:replace_erbs
+  gem 'devise-i18n-views' # use rails g devise:views:locale fr
 end
 
 group :production do
@@ -45,6 +47,8 @@ gem 'devise', '~> 3.2.4'
 
 # New wave Internationalization support for Ruby.
 gem 'i18n', '~> 0.6.9'
+# Translations for the devise gem
+gem 'devise-i18n', '~> 0.10.3'
 
 # Ruby on Rails replacement for unobtrusive scripting library implemented in AngularJS"
 gem 'angular-ujs', '~> 0.4.13'
