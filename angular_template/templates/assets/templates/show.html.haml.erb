@@ -1,25 +1,15 @@
-<div ng-controller="ProjectsDetailController">
-  <form name="form" ng-submit="submit()" >
-    <div>
-      <label>Nom du projet</label>
-      <input name="id" type="hidden" ng-model="project.id" />
-      <input name="name" ng-model="project.name" ng-minlength="3" ng-maxlength="20" required />
-      <span ng-show="form.name.$error.minlength">Le nom doit être d'au moins 3 caractères</span>
-      <span ng-show="form.name.$error.maxlength">Le nom doit être d'au mieux 20 caractères</span>
-    </div>
+%div{"ng-controller" => "ProjectsDetailController"
+  %form{:name => "form", "ng-submit" => "submit()"
+    .form-group
+      %label Nom du projet
+      %input{ :name => "id", :type => "hidden", "ng-model" => "project.id"}
+      %input{ :name="name" "ng-model" => "project.name", "ng-minlength" => "3", "ng-maxlength" => "20", "required" => "required"}
+      %span{ "ng-show" => "form.name.$error.minlength"} Le nom doit être d'au moins 3 caractères
+      %span{ "ng-show" => "form.name.$error.maxlength"} Le nom doit être d'au mieux 20 caractères
 
-    <div>
-      <label>Détail du projet</label>
-      <textarea name="detail" ng-model="project.detail" ></textarea>
-    </div>
+    .form-group
+      %label Détail du projet
+      %textarea{ :name => "detail", "ng-model" => "project.detail" }
 
-    <div>
-      <input type="submit" id="submit" value="Enregistrer" />
-    </div>
-  </form>
-
-  <label>Données envoyées</label>
-  <pre >
-{{result | json}}
-  </pre>
-</div>
+    .form-group
+      %input{ :type => "submit", :id => "submit", :value => "Enregistrer" }

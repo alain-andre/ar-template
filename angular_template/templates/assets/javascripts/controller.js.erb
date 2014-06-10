@@ -1,55 +1,41 @@
 /**
- * Controleur dans le module projectsModuleControllers
+ * Contrôleur dans le module <%= class_name %>sModuleControllers
  */
-projectsModuleControllers.controller('ProjectsController', ['$scope', '$http',
-  function($scope, $http){
-    // Liste des Projects
-    /*$http.get('projects/list.json').success(function(data) {
-      $scope.projects = data;
-    });*/
-    $scope.projects = [
-      {'id': '1',
-        'name': 'Projet 1',
-        'detail': 'bla bla bla',
-        'created_at': '2014/02/12'},
-      {'id': '2',
-        'name': 'Projet 2',
-        'detail': 'bla bla bla',
-        'created_at': '2014/01/04'}
-    ];
 
-    $scope.projectOrder = "";
-    $scope.projectQuery = "";
+// Index
+<%= class_name.pluralize %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>IndexController', ['$scope', '$http',
+  function($scope, $http){
+    // Liste des <%= class_name.pluralize %>
+    $http.get('<%= class_name.pluralize %>/list.json').success(function(data) {
+      $scope.<%= class_name.pluralize %> = data;
+    });
+
+    $scope.<%= class_name %>Order = "";
+    $scope.<%= class_name %>Query = "";
   }
 ]);
 
-projectsModuleControllers.controller('ProjectsDetailController', ['$scope', '$routeParams', '$http',
+// Show
+<%= class_name.pluralize %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>ShowController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
-    /*$http.get('projects/' + $routeParams.projectId + '.json').success(function(data) {
-      $scope.project = data;
-    });*/
-    $scope.project = {
-      'id': $routeParams.projectId,
-      'name': 'Projet '+$routeParams.projectId, 
-      'detail': 'blablabla'
-    };
+    $http.get('<%= class_name.pluralize %>/' + $routeParams.<%= class_name %>Id + '.json').success(function(data) {
+      $scope.<%= class_name %> = data;
+    });
 
     // Enregistre le formulaire
     $scope.submit = function() {
-      if($scope.project.name){
-        $scope.result = {
-          'id': $scope.project.id,
-          'name': $scope.project.name, 
-          'detail': $scope.project.detail
-        };
-        /*$http({method: 'POST', url: '/projects/modify', data: $scope.result}).
+      if($scope.<%= class_name %>.name){
+        $http({method: 'POST', url: '/<%= class_name.pluralize %>/modify', data: $scope.result}).
           success(function(data, status, headers, config) {
             alert('success');
           }).
           error(function(data, status, headers, config) {
             alert('error');
-          });*/
+          });
       }
     };
   }
 ]);
+
+
+// New

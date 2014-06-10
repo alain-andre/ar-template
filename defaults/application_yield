@@ -16,8 +16,7 @@
 <div class="container">
   <% flash.each do |name, msg| %>
     <% if msg.is_a?(String) %>
-      <div class="amo-flash col-md-10 col-md-offset-1 col-xs-10 col-sm-offset-1 alert alert-<%= name == :notice ? "success" : "error" %>">
-        <a class="close" data-dismiss="alert">#215;</a>
+      <div class="col-md-10 col-md-offset-1 col-xs-10 col-sm-offset-1 alert alert-<%= name == :notice ? "success" : "danger" %>">
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       </div>
     <% end %>
