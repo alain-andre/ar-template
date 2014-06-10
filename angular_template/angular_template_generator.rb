@@ -28,9 +28,9 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
     def update_init camelized_class
       if FileTest.exists?("app/assets/javascripts/init.js") then
         inject_into_file 'app/assets/javascripts/init.js', :after => "'use strict';" do
-          "\n\t// module pour les controleurs de #{class_name}s\n\tvar #{get_camelized_class}sModuleControllers = angular.module('#{get_camelized_class}sModuleControllers', []);"
+          "\n\t// module pour les controleurs de #{class_name}s\n\tvar #{get_pluralized_camelized_class}ModuleControllers = angular.module('#{get_pluralized_camelized_class}ModuleControllers', []);"
         end
-        gsub_file 'app/assets/javascripts/init.js', /'ngRoute',/, "'ngRoute', '#{get_camelized_class}sModuleControllers',"
+        gsub_file 'app/assets/javascripts/init.js', /'ngRoute',/, "'ngRoute', '#{get_pluralized_camelized_class}ModuleControllers',"
       else
         put "Error, the application isn't templated for angularjs"
       end
@@ -42,11 +42,11 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
       if File.open(_file).each_line.any?{|line| line.include?('$routeProvider')}
         inject_into_file _file, :after => "$routeProvider." do
         "\nwhen('/#{class_name}', {
-          templateUrl: 'assets/templates/#{class_name}/index.html',
+          templateUrl: 'assets/#{class_name}/index.html',
           controller: '#{camelized_class}sIndexController'
         }).
         when('/#{class_name}/:id', {
-          templateUrl: 'assets/templates/#{class_name}/show.html',
+          templateUrl: 'assets/#{class_name}/show.html',
           controller: '#{camelized_class}sShowController'
         })."
         end
@@ -61,5 +61,9 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
 
     def get_downcased_class
       downcased_class = class_name.downcase
+    end
+
+    def get_pluralized_camelized_class
+      class_name.pluralize.camelize(:lower)
     end
 end

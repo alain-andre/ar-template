@@ -1,19 +1,18 @@
+%h4 Liste des <%= class_name.pluralize %>
 
-  %h4 Liste des <%= class_name.pluralize %>
-
-  %div
-    %ul
-      %li
-        %a{ "href" => "#/<%= class_name.pluralize %>/nil" } t('.new', :default => 'New') <%= class_name %>
-      %li
-        t('.search', :default => 'Search'):
-        %input{ "ng-model" => "<%= class_name %>Query" }
-      %li
-        Sort by:
-        %select{ "ng-model" => "<%= class_name %>Order" }
-          %option{ :value => "name" } t('.alphabetical', :default => 'Alphabetical')
-          %option{ :value => "created_at" } t('.latest', :default => 'Latest')
+%div
   %ul
-    %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
-      %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}" } {{<%= class_name %>.name}}
-      %p {{<%= class_name %>.detail}}
+    %li
+      %a{ "href" => "#/<%= class_name.pluralize %>/nil" } t('.new', :default => 'New') <%= class_name %>
+    %li
+      t('.search', :default => 'Search'):
+      %input{ "ng-model" => "<%= class_name %>Query" }
+    %li
+      Sort by:
+      %select{ "ng-model" => "<%= class_name %>Order" }
+        %option{ :value => "name" } t('.alphabetical', :default => 'Alphabetical')
+        %option{ :value => "created_at" } t('.latest', :default => 'Latest')
+%ul
+  %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
+    %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}" } {{<%= class_name %>.name}}
+    %p {{<%= class_name %>.detail}}

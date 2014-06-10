@@ -3,7 +3,7 @@
  */
 
 // Index
-<%= class_name.pluralize %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>IndexController', ['$scope', '$http',
+<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>IndexController', ['$scope', '$http',
   function($scope, $http){
     // Liste des <%= class_name.pluralize %>
     $http.get('<%= class_name.pluralize %>/list.json').success(function(data) {
@@ -16,7 +16,7 @@
 ]);
 
 // Show
-<%= class_name.pluralize %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>ShowController', ['$scope', '$routeParams', '$http',
+<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>ShowController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
     $http.get('<%= class_name.pluralize %>/' + $routeParams.<%= class_name %>Id + '.json').success(function(data) {
       $scope.<%= class_name %> = data;
