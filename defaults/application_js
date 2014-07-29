@@ -9,3 +9,8 @@ app_name.config(['$routeProvider',
       });
   }
 ]);
+
+/**
+ * Controlleur des messages flash
+ */
+function FlashCtrl($scope){}

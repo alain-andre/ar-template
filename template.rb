@@ -71,6 +71,7 @@ git commit: '-m "Generation de User et devise:views + internationalisation"'
 
 file = File.open(File.expand_path(File.dirname(__FILE__))+"/defaults/application_yield", "rb")
 gsub_file 'app/views/layouts/application.html.erb', /<%= yield %>/, file.read
+gsub_file 'app/views/layouts/application.html.erb', /app_name/, "#{@appName}"
 
 git add: "-A"
 git commit: '-m "Ajout de la barre menu + messages dans app/views/layouts/application.html.erb"'
