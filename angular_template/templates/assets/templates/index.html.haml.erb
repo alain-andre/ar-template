@@ -2,22 +2,24 @@
   =I18n.t('.list_of', :default => 'List of %{product}', :product => "<%= class_name.pluralize %>")
 
 %div
-  %ul
-    %li
-      %a{ "href" => "#/<%= class_name %>/0" } 
-        =I18n.t('.new', :default => 'New %{product}', :product => "<%= class_name %>") 
-    %li
+  %div{ :class => "col-md-6"}
+    %a{ "href" => "#/<%= class_name %>/0", :class => "btn btn-default" } 
+      =I18n.t('.new', :default => 'New %{product}', :product => "<%= class_name %>") 
+
+  %div{ :class => "col-md-6"}
+    %label
       =I18n.t('.search', :default => 'Search')
-      %input{ "ng-model" => "<%= class_name %>Query" }
-    %li
-      Sort by:
-      %select{ "ng-model" => "<%= class_name %>Order" }
-        %option{ :value => "name" } 
-          =I18n.t('.alphabetical', :default => 'Alphabetical')
-        %option{ :value => "created_at" } 
-          =I18n.t('.latest', :default => 'Latest')
+    %input{ "ng-model" => "<%= class_name %>Query", :class => "form-control" }
+    
+    %label
+      =I18n.t('.sort_by', :default => 'Sort by')
+    %select{ "ng-model" => "<%= class_name %>Order", :class => "form-control" }
+      %option{ :value => "name" } 
+        =I18n.t('.alphabetical', :default => 'Alphabetical')
+      %option{ :value => "created_at" } 
+        =I18n.t('.latest', :default => 'Latest')
 
 %ul
   %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
-    %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}" } {{<%= class_name %>.name}}
+    %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}", :class => "btn btn-default" } {{<%= class_name %>.name}}
     %p {{<%= class_name %>.detail}}

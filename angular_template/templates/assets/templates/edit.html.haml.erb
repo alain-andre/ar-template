@@ -4,5 +4,5 @@
 %div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>DeleteController"}
   = render_haml("#{class_name}/_form.html.haml")
   .form-group
-    %input{ :type => "submit", :id => "submit", :value => I18n.t('edit', :default => 'Edit') }
-    %input{ :type => "submit", :id => "submit", :value => I18n.t('delete', :default => 'Delete') }
+    %input{ :type => "submit", :id => "submit", :value => I18n.t('edit', :default => 'Edit'), :class => "btn btn-default" }
+    %input{ :type => "submit", :id => "submit", :value => I18n.t('delete', :default => 'Delete'), :class => "btn btn-default" }
