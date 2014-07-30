@@ -96,6 +96,11 @@ File.new("config/initializers/haml.rb", "w")
 append_to_file 'config/initializers/haml.rb' do
   "\nRails.application.assets.register_engine '.haml', Tilt::HamlTemplate"
 end
+say "Mise en place de la gestion des partials dans les Haml d'Assets"
+append_to_file 'config/initializers/haml.rb' do
+  "\nRails.application.assets.context_class.class_eval do\n\tinclude HamlHelper\n\tend"
+end
+template File.expand_path(File.dirname(__FILE__))+"/defaults/haml_helper.rb.erb", "app/helpers/haml_helper.rb" 
 
 git add: "-A"
 git commit: '-m "Création de l\'architecture pour la gestion des templates angularjs"'

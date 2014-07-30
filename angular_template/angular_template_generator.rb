@@ -12,58 +12,51 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
   def copy_angular_template_file
     template "assets/javascripts/controller.js.erb", "app/assets/javascripts/controllers/#{class_name}.js"
     template "assets/templates/index.html.haml.erb", "app/assets/templates/#{class_name}/index.html.haml"
+    template "assets/templates/edit.html.haml.erb", "app/assets/templates/#{class_name}/edit.html.haml"
     template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name}/show.html.haml"
     template "assets/templates/new.html.haml.erb", "app/assets/templates/#{class_name}/new.html.haml"
+    template "assets/templates/_form.html.haml.erb", "app/assets/templates/#{class_name}/_form.html.haml"
   end
 
   # modify text of the copyed files
   def update_template_file
-    update_init get_camelized_class
-    update_application get_camelized_class
+    update_init
+    update_application
   end
 
   private
 
     # Modify assets/javascripts/init.js or create if exists
-    def update_init camelized_class
+    def update_init
       if FileTest.exists?("app/assets/javascripts/init.js") then
         inject_into_file 'app/assets/javascripts/init.js', :after => "'use strict';" do
-          "\n\t// module pour les controleurs de #{class_name}s\n\tvar #{get_pluralized_camelized_class}ModuleControllers = angular.module('#{get_pluralized_camelized_class}ModuleControllers', []);"
+          "\n\t// module pour les controleurs de #{class_name}s\n\tvar #{class_name.pluralize.camelize(:lower)}ModuleControllers = angular.module('#{class_name.pluralize.camelize(:lower)}ModuleControllers', []);"
         end
-        gsub_file 'app/assets/javascripts/init.js', /'ngRoute',/, "'ngRoute', '#{get_pluralized_camelized_class}ModuleControllers',"
+        gsub_file 'app/assets/javascripts/init.js', /'ngRoute',/, "'ngRoute', '#{class_name.pluralize.camelize(:lower)}ModuleControllers',"
       else
         put "Error, the application isn't templated for angularjs"
       end
     end
 
     # Modify assets/javascripts/application.js
-    def update_application(camelized_class)
+    def update_application()
       _file = "app/assets/javascripts/application.js"
       if File.open(_file).each_line.any?{|line| line.include?('$routeProvider')}
         inject_into_file _file, :after => "$routeProvider." do
-        "\nwhen('/#{class_name}', {
+        "\n      when('/#{class_name}', {
           templateUrl: 'assets/#{class_name}/index.html',
-          controller: '#{camelized_class}sIndexController'
+          controller: '#{class_name.camelize(:upper)}sIndexController'
         }).
         when('/#{class_name}/:id', {
           templateUrl: 'assets/#{class_name}/show.html',
-          controller: '#{camelized_class}sShowController'
+          controller: '#{class_name.camelize(:upper)}sShowController'
         })."
         end
+        # gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
+        #   "\1\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
+        # end
       else
         put "Error, the application isn't templated for angularjs"
       end
-    end
-
-    def get_camelized_class
-      camelized_class = class_name.camelize(:lower)
-    end
-
-    def get_downcased_class
-      downcased_class = class_name.downcase
-    end
-
-    def get_pluralized_camelized_class
-      class_name.pluralize.camelize(:lower)
     end
 end
