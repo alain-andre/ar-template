@@ -1,2 +1,7 @@
 %h4
-  Template de creation d'un <%= class_name %>
+  = I18n.t(".creation_page", :default => "Creation page of %{product}", :product => "<%= class_name %>")
+
+%div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>EditController"}
+  = render_haml("#{class_name}/_form.html.haml")
+  .form-group
+    %input{ :type => "submit", :id => "submit", :value => I18n.t('save', :default => 'Save') }

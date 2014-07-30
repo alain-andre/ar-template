@@ -1,21 +1,5 @@
-%div{"ng-controller" => "ProjectsDetailController"}
-  %form{:name => "form", "ng-submit" => "submit()"
-    .form-group
-      %label 
-        =I18n.t('name_of', :default => 'Name of')
-        <%= class_name %>
-      %input{ :name => "id", :type => "hidden", "ng-model" => "<%= class_name %>.id"}
-      %input{ :name="name" "ng-model" => "<%= class_name %>.name", "ng-minlength" => "3", "ng-maxlength" => "20", "required" => "required"}
-      %span{ "ng-show" => "form.name.$error.minlength"} 
-        =I18n.t('must_be_caracters_at_least', :default => 'Must be at least %{nb} caracters', :nb => 3)
-      %span{ "ng-show" => "form.name.$error.maxlength"} 
-        =I18n.t('must_be_caracters_maximum', :default => 'Muste be at maximum %{nb} caracters', :nb => 20)
+%h4
+  = I18n.t(".detail_page", :default => "Detail page of %{product}", :product => "<%= class_name %>")
 
-    .form-group
-      %label 
-        =I18n.t('details_of', :default => 'Details of') 
-        <%= class_name %>
-      %textarea{ :name => "detail", "ng-model" => "<%= class_name %>.detail" }
-
-    .form-group
-      %input{ :type => "submit", :id => "submit", :value => I18n.t('save', :default => 'Save') }
+%div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>ShowController"}
+  = render_haml("<%= class_name %>/_form.html.haml")

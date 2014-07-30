@@ -21,11 +21,21 @@
     $http.get('<%= class_name.pluralize %>/' + $routeParams.<%= class_name %>Id + '.json').success(function(data) {
       $scope.<%= class_name %> = data;
     });
+  }
+]);
 
-    // Enregistre le formulaire
+
+// Edit
+<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>EditController', ['$scope', '$routeParams', '$http',
+  function($scope, $routeParams, $http){
+    $http.get('<%= class_name.pluralize %>/' + $routeParams.<%= class_name %>Id + '.json').success(function(data) {
+      $scope.<%= class_name %> = data;
+    });
+
+  // Enregistre le formulaire
     $scope.submit = function() {
       if($scope.<%= class_name %>.name){
-        $http({method: 'POST', url: '/<%= class_name.pluralize %>/modify', data: $scope.result}).
+        $http({method: 'POST', url: '/<%= class_name.pluralize %>/edit', data: $scope.result}).
           success(function(data, status, headers, config) {
             alert('success');
           }).
@@ -36,6 +46,3 @@
     };
   }
 ]);
-
-
-// New
