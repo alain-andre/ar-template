@@ -2,26 +2,29 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("../templates", __FILE__)
 
 
-  # - Crée le js dans assets/javascripts/controllers/CONTROLLER.js
-  # - Crée les fichiers dans assets/templates/CONTROLLER
-  #  - index.html.haml
-  #  - edit.html.haml
-  #  - show.html.haml
-  #  - new.html.haml
-  #  - _form.html.haml
-  def copy_angular_template_file
+  # Creates js in assets/javascripts/controllers/CONTROLLER.js
+  # Creates files in assets/templates/CONTROLLER
+  #  * index.html.haml
+  #  * edit.html.haml
+  #  * show.html.haml
+  #  * new.html.haml
+  #  * _form.html.haml
+  def template_angular_template_file
     template "assets/javascripts/controller.js.erb", "app/assets/javascripts/controllers/#{class_name}.js"
     template "assets/templates/index.html.haml.erb", "app/assets/templates/#{class_name}/index.html.haml"
     template "assets/templates/edit.html.haml.erb", "app/assets/templates/#{class_name}/edit.html.haml"
     template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name}/show.html.haml"
     template "assets/templates/new.html.haml.erb", "app/assets/templates/#{class_name}/new.html.haml"
     template "assets/templates/_form.html.haml.erb", "app/assets/templates/#{class_name}/_form.html.haml"
-  end
-
-  # modify text of the copyed files
-  def update_template_file
+    # modify the templated files
     update_init
     update_application
+  end
+
+  # Creates ruby controller of the required api
+  def template_ruby_controller
+    template "controllers/api/v1/controller.rb.erb", "app/controllers/api/v1/#{class_name.downcase}_controller.rb"
+    update_routes
   end
 
   private
@@ -52,11 +55,20 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
           controller: '#{class_name.camelize(:upper)}sShowController'
         })."
         end
-        # gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
-        #   "\1\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
-        # end
+        # 
+        gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
+          "\1\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
+        end
       else
         put "Error, the application isn't templated for angularjs"
       end
     end
+
+    # Updates routes with new api controller
+    def update_routes
+      inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
+        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.downcase}\n\t\tend\n\tend\n"
+      end
+    end
+
 end
