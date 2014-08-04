@@ -13,7 +13,7 @@ module Api
 
       # Return datas of the demanded <%= class_name %>
       def show
-        respond_with <%= class_name.camelize(:upper) %>.find(params[:id])
+        respond_with @<%= class_name.camelize(:lower) %>
       end
 
       # Return a new <%= class_name %>
@@ -23,7 +23,7 @@ module Api
 
       # Return datas of the demanded <%= class_name %>
       def edit
-        respond_with <%= class_name.camelize(:upper) %>.find(params[:id])
+        respond_with @<%= class_name.camelize(:lower) %>
       end
 
       # Create a new <%= class_name %>

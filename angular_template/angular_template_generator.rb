@@ -57,7 +57,7 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
         end
         # 
         gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
-          "\1\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
+          '\1'+"\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
         end
       else
         put "Error, the application isn't templated for angularjs"
@@ -66,6 +66,11 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
 
     # Updates routes with new api controller
     def update_routes
+      # Routes for the views api
+      inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
+        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.downcase}\n\t\tend\n\tend\n"
+      end
+      # Routes needing an admin login (update, create, delete)
       inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
         "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.downcase}\n\t\tend\n\tend\n"
       end
