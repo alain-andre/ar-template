@@ -1,0 +1,58 @@
+module Admin
+  # admin actions for the controller <%= class_name %>
+  # * Standard response is in json
+  class <%= class_name.camelize(:upper).pluralize %>Controller < ApplicationController
+    before_action :set_<%= class_name.tableize.singularize %>, only: [:index, :show, :edit, :update, :destroy]
+    respond_to :json
+
+    # Return a new <%= class_name %>
+    def new
+      respond_with <%= class_name.camelize(:upper) %>.new
+    end
+
+    # Return datas of the demanded <%= class_name %>
+    def edit
+      respond_with @<%= class_name.tableize.singularize %>
+    end
+
+    # Create a new <%= class_name %>
+    def create
+      @<%= class_name.tableize.singularize %> = <%= class_name %>.new(<%= class_name.tableize.singularize %>_params)
+      if @<%= class_name.tableize.singularize %>.save
+        respond_with :no_content
+      else
+        respond_with @<%= class_name.tableize.singularize %>.errors
+      end
+    end
+
+    # Updates the given <%= class_name %>
+    def update
+      if @<%= class_name.tableize.singularize %>.update(<%= class_name.tableize.singularize %>_params)
+        respond_with :no_content
+      else
+        respond_with @<%= class_name.tableize.singularize %>.errors
+      end
+    end
+
+    # Delete 
+    def destroy
+      if @<%= class_name.camelize(:lower) %>.destroy
+        respond_with :no_content
+      else
+        respond_with @<%= class_name.tableize.singularize %>.errors
+      end
+    end
+
+    private
+      # Use callbacks to share common setup or constraints between actions.
+      def set_<%= class_name.tableize.singularize %>
+        @<%= class_name.tableize.singularize %> = <%= class_name.camelize(:upper) %>.find(params[:id])
+      end
+
+      # Never trust parameters from the scary internet, only allow the white list through.
+      def <%= class_name.tableize.singularize %>_params
+        params[:<%= class_name.tableize.singularize %>]
+      end
+
+  end
+end

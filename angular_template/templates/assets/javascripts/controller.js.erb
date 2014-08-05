@@ -6,7 +6,7 @@
 <%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>IndexController', ['$scope', '$http',
   function($scope, $http){
     // Liste des <%= class_name.pluralize %>
-    $http.get('api/v1/<%= class_name %>/index').success(function(data) {
+    $http.get('api/v1/<%= class_name.tableize %>/index').success(function(data) {
       $scope.<%= class_name.pluralize %> = data;
     });
 
@@ -18,7 +18,7 @@
 // Show
 <%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>ShowController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name %>/show?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
+    $http.get('api/v1/<%= class_name.tableize %>/show?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
       $scope.<%= class_name %> = data;
     });
   }
@@ -27,14 +27,14 @@
 // New
 <%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>NewController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name %>/new').success(function(data) {
+    $http.get('api/v1/<%= class_name.tableize %>/new').success(function(data) {
       $scope.<%= class_name %> = data;
     });
 
   // Create
     $scope.submit = function() {
       if($scope.<%= class_name %>.name){
-        $http({method: 'POST', url: 'admin/<%= class_name %>/create', data: $scope.result}).
+        $http({method: 'POST', url: 'admin/<%= class_name.tableize %>/create', data: $scope.result}).
           success(function(data, status, headers, config) {
             alert('success');
           }).
@@ -49,14 +49,14 @@
 // Edit
 <%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>EditController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name %>/edit?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
+    $http.get('api/v1/<%= class_name.tableize %>/edit?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
       $scope.<%= class_name %> = data;
     });
 
   // PATCH/PUT Update
     $scope.submit = function() {
       if($scope.<%= class_name %>.name){
-        $http({method: 'PUT', url: 'admin/<%= class_name %>/update?id=' + $routeParams.<%= class_name %>Id, data: $scope.result}).
+        $http({method: 'PUT', url: 'admin/<%= class_name.tableize %>/update?id=' + $routeParams.<%= class_name %>Id, data: $scope.result}).
           success(function(data, status, headers, config) {
             alert('success');
           }).
@@ -71,14 +71,14 @@
 // Destroy
 <%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>DestroyController', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name %>/edit?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
+    $http.get('api/v1/<%= class_name.tableize %>/edit?id=' + $routeParams.<%= class_name %>Id).success(function(data) {
       $scope.<%= class_name %> = data;
     });
 
   // DELETE Delete
     $scope.submit = function() {
       if($scope.<%= class_name %>.name){
-        $http({method: 'DELETE', url: 'admin/<%= class_name %>/delete?id=' + $routeParams.<%= class_name %>Id, data: $scope.result}).
+        $http({method: 'DELETE', url: 'admin/<%= class_name.tableize %>/destroy?id=' + $routeParams.<%= class_name %>Id, data: $scope.result}).
           success(function(data, status, headers, config) {
             alert('success');
           }).

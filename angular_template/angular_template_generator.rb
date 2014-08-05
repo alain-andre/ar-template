@@ -21,9 +21,13 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
     update_application
   end
 
-  # Creates ruby controller of the required api
+  # Creates ruby controller for the view api and admin actions
   def template_ruby_controller
-    template "controllers/api/v1/controller.rb.erb", "app/controllers/api/v1/#{class_name.downcase}_controller.rb"
+    template "controllers/api/v1/controller.rb.erb", "app/controllers/api/v1/#{class_name.tableize}_controller.rb"
+    template "controllers/admin/controller.rb.erb", "app/controllers/admin/#{class_name.tableize}_controller.rb"
+    template "test/controllers/controller_test.rb.erb", "app/test/controllers/#{class_name.tableize}_controller_test.rb"
+    template "test/fixtures/test.yml", "app/test/fixtures/test_#{class_name.tableize}.yml"
+    template "test/helpers/helper_test.rb.erb", "app/test/helpers/#{class_name.tableize}_helper_test.rb"
     update_routes
   end
 
@@ -55,9 +59,9 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
           controller: '#{class_name.camelize(:upper)}sShowController'
         })."
         end
-        # 
+        # Add the link in the menu
         gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
-          '\1'+"\%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
+          "\$1%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
         end
       else
         put "Error, the application isn't templated for angularjs"
@@ -66,13 +70,13 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
 
     # Updates routes with new api controller
     def update_routes
-      # Routes for the views api
+      # Routes for the views api (index, show)
       inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
-        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.downcase}\n\t\tend\n\tend\n"
+        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.tableize}\n\t\tend\n\tend\n"
       end
       # Routes needing an admin login (update, create, delete)
       inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
-        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.downcase}\n\t\tend\n\tend\n"
+        "\n\t##{class_name} controller admin\n\tnamespace :admin, defaults: {format: 'json'} do\n\t\tresources :#{class_name.tableize}\n\tend\n"
       end
     end
 
