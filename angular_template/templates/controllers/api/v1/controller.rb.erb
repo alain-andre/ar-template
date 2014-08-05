@@ -3,7 +3,7 @@ module Api
     # API v1 for the controller <%= class_name %>
     # * Standard response is in json
     class <%= class_name.pluralize %>Controller < ApplicationController
-      before_action :set_<%= class_name.tableize.singularize %>, only: [:index, :show]
+      before_action :set_<%= class_name.tableize.singularize %>, only: [:show]
       respond_to :json
 
       # List all the <%= class_name %> of the DB

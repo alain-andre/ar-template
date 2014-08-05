@@ -60,8 +60,8 @@ class AngularTemplateGenerator < Rails::Generators::NamedBase
         })."
         end
         # Add the link in the menu
-        gsub_file 'app/views/layouts/application.html.haml', /^(\s*)\%ul.nav.navbar-nav.navbar-right/ do
-          "\$1%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
+        gsub_file 'app/views/layouts/application.html.haml', /^(\s*)%ul.nav.navbar-nav.navbar-right/ do
+          "\1%ul.nav.navbar-nav.navbar-right\n\1  %li\n\1    = link_to \"#{class_name}\", \"/#/#{class_name}\""
         end
       else
         put "Error, the application isn't templated for angularjs"

@@ -2,9 +2,14 @@ module Admin
   # admin actions for the controller <%= class_name %>
   # * Standard response is in json
   class <%= class_name.camelize(:upper).pluralize %>Controller < ApplicationController
-    before_action :set_<%= class_name.tableize.singularize %>, only: [:index, :show, :edit, :update, :destroy]
+    before_action :set_<%= class_name.tableize.singularize %>, only: [:edit, :update, :destroy]
     respond_to :json
 
+    # List all the <%= class_name %> of the DB
+    def index
+      respond_with <%= class_name.camelize(:upper) %>.all
+    end
+      
     # Return a new <%= class_name %>
     def new
       respond_with <%= class_name.camelize(:upper) %>.new
