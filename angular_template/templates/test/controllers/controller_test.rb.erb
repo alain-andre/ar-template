@@ -1,0 +1,49 @@
+require 'test_helper'
+
+class <%= class_name.pluralize %>ControllerTest < ActionController::TestCase
+  setup do
+    @<%= class_name.tableize.singularize %> = <%= class_name.tableize %>(:one)
+  end
+
+  test "should get index" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:<%= class_name.tableize %>)
+  end
+
+  test "should get new" do
+    get :new
+    assert_response :success
+  end
+
+  test "should create <%= class_name.tableize.singularize %>" do
+    assert_difference('<%= class_name %>.count') do
+      post :create, <%= class_name.tableize.singularize %>: {  }
+    end
+
+    assert_redirected_to <%= class_name.tableize.singularize %>_path(assigns(:<%= class_name.tableize.singularize %>))
+  end
+
+  test "should show <%= class_name.tableize.singularize %>" do
+    get :show, id: @<%= class_name.tableize.singularize %>
+    assert_response :success
+  end
+
+  test "should get edit" do
+    get :edit, id: @<%= class_name.tableize.singularize %>
+    assert_response :success
+  end
+
+  test "should update <%= class_name.tableize.singularize %>" do
+    patch :update, id: @<%= class_name.tableize.singularize %>, <%= class_name.tableize.singularize %>: {  }
+    assert_redirected_to <%= class_name.tableize.singularize %>_path(assigns(:<%= class_name.tableize.singularize %>))
+  end
+
+  test "should destroy <%= class_name.tableize.singularize %>" do
+    assert_difference('<%= class_name %>.count', -1) do
+      delete :destroy, id: @<%= class_name.tableize.singularize %>
+    end
+
+    assert_redirected_to <%= class_name.tableize %>_path
+  end
+end
