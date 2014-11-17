@@ -25,6 +25,7 @@ git commit: '-m "Templating de app/controllers/"'
 
 # app/views/layouts/
 template "#{filesDir}/app/views/layouts/application.html.haml.erb", "app/views/layouts/application.html.haml"
+FileUtils.rm("app/views/layouts/application.html.erb")
 template "#{filesDir}/app/views/layouts/_messages.html.haml", "app/views/layouts/_messages.html.haml"
 template "#{filesDir}/app/views/layouts/_navbar.html.haml.erb", "app/views/layouts/_navbar.html.haml"
 git add: "-A"
@@ -38,7 +39,8 @@ git commit: '-m "Templating de config/initializers/"'
 
 # app/assets/javascripts/
 template "#{filesDir}/app/assets/javascripts/controllers/pages_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/pages_ctrl.js.coffee"
-template "#{filesDir}/app/assets/javascripts/locales/locales/en.json", "app/assets/javascripts/locales/locales/en.json.erb"
+FileUtils.mkdir_p("app/assets/javascripts/locales/locales/")
+FileUtils.cp("#{filesDir}/app/assets/javascripts/locales/locales/en.json.erb", "app/assets/javascripts/locales/locales/en.json.erb")
 template "#{filesDir}/app/assets/javascripts/init.js.coffee.erb", "app/assets/javascripts/init.js.coffee"
 template "#{filesDir}/app/assets/javascripts/application.js", "app/assets/javascripts/application.js"
 git add: "-A"
