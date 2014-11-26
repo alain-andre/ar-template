@@ -1,5 +1,6 @@
 # vars
 @appName = @app_name.camelize(:lower)
+@AppName = @app_name.camelize(:upper)
 filesDir = File.expand_path(File.dirname(__FILE__))+"/defaults"
 
 # gem
@@ -20,6 +21,7 @@ git commit: '-m "Templating de app/controllers/concerns/"'
 
 # app/controllers/
 template "#{filesDir}/app/controllers/application_controller.rb", "app/controllers/application_controller.rb"
+template "#{filesDir}/app/controllers/home_controller.rb", "app/controllers/home_controller.rb"
 git add: "-A"
 git commit: '-m "Templating de app/controllers/"'
 
@@ -31,54 +33,57 @@ template "#{filesDir}/app/views/layouts/_navbar.html.haml.erb", "app/views/layou
 git add: "-A"
 git commit: '-m "Templating de app/views/layouts/"'
 
+# app/views/home
+template "#{filesDir}/app/views/home/index.html.haml.erb", "app/views/home/index.html.haml"
+git add: "-A"
+git commit: '-m "Templating de app/views/home/"'
+
 # config/initializers/
 template "#{filesDir}/config/initializers/sprockets.rb", "config/initializers/sprockets.rb"
 git add: "-A"
 git commit: '-m "Templating de config/initializers/"'
 
+# config/routes.rb
+template "#{filesDir}/config/routes.rb", "config/routes.rb"
+git add: "-A"
+git commit: '-m "Templating de config/routes.rb"'
+
+# config/application.rb
+template "#{filesDir}/config/application.rb.erb", "config/application.rb"
+git add: "-A"
+git commit: '-m "Templating de config/application.rb"'
 
 # app/assets/javascripts/
 template "#{filesDir}/app/assets/javascripts/controllers/pages_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/pages_ctrl.js.coffee"
-FileUtils.mkdir_p("app/assets/javascripts/locales/locales/")
-FileUtils.cp("#{filesDir}/app/assets/javascripts/locales/locales/en.json.erb", "app/assets/javascripts/locales/locales/en.json.erb")
+template "#{filesDir}/app/assets/javascripts/services/.keep", "app/assets/javascripts/services/.keep"
 template "#{filesDir}/app/assets/javascripts/init.js.coffee.erb", "app/assets/javascripts/init.js.coffee"
+template "#{filesDir}/app/assets/javascripts/routes.js.coffee.erb", "app/assets/javascripts/routes.js.coffee"
 template "#{filesDir}/app/assets/javascripts/application.js", "app/assets/javascripts/application.js"
 git add: "-A"
-git commit: '-m "Templating de config/initializers/"'
+git commit: '-m "Templating de assets/javascripts/"'
+
+# app/assets/stylesheets
+template "#{filesDir}/app/assets/stylesheets/application.css.scss", "app/assets/stylesheets/application.css.scss"
+git add: "-A"
+git commit: '-m "Templating de assets/stylesheets/"'
+
+# app/assets/locales/
+FileUtils.mkdir_p("app/assets/locales/locales/")
+FileUtils.cp("#{filesDir}/app/assets/locales/locales/en.json.erb", "app/assets/locales/locales/en.json.erb")
+git add: "-A"
+git commit: '-m "Templating de assets/javascripts/"'
+
+# app/services/
+template "#{filesDir}/app/services/translations.rb", "app/services/translations.rb"
+git add: "-A"
+git commit: '-m "Templating de app/services/"'
+
+# app/assets/templates/
+template "#{filesDir}/app/assets/templates/pages/index.html.haml.erb", "app/assets/templates/pages/index.html.haml"
+git add: "-A"
+git commit: '-m "Templating de assets/templates/"'
 
 # ======================================
-# inject_into_file 'app/assets/javascripts/application.js', :before => "//= require_tree ." do
-#   "\n//= require angular-ui-bootstrap"
-# end
-
-# inject_into_file 'app/assets/stylesheets/application.css', :after => "*/" do
-#   "\n\n@import \"bootstrap.css\";"
-# end
-
-# git add: "-A"
-# git commit: '-m "Configuration du css bootstrap pour angular"'
-
-# inject_into_file 'app/assets/javascripts/application.js', :before => "//= require_tree ." do
-#   "\n//= require angular-ujs"
-# end
-# gsub_file 'app/assets/javascripts/application.js', /\/\/= require jquery/, "//"
-# gsub_file 'app/assets/javascripts/application.js', /\/\/_ujs/, "//"
-
-# #
-# say "Configuration de l'application angularjs"
-# gsub_file 'app/views/layouts/application.html.erb', /<html>/, "<html lang=\"fr\" ng-app=\"#{@appName}\">"
-
-# File.new("app/assets/javascripts/init.js", "w")
-# append_to_file 'app/assets/javascripts/init.js' do
-#   "'use strict';\n\t// initialisation de l'application\n\tvar #{@appName} = angular.module('#{@appName}', ['ngRoute', 'angular.ujs']);"
-# end
-
-# inject_into_file 'app/assets/javascripts/application.js', :before => "//= require_tree ." do
-#   "\n//= require init\n"
-# end
-
-# git add: "-A"
-# git commit: '-m "Configuration des scripts pour angular"'
 
 # run "rails generate devise:install"
 # inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
@@ -108,36 +113,7 @@ git commit: '-m "Templating de config/initializers/"'
 # git add: "-A"
 # git commit: '-m "Ajout de la barre menu + messages dans app/views/layouts/application.html.erb"'
 
-# #
-# say "Création de l'architecture pour la gestion des templates angularjs"
-# file = File.open(File.expand_path(File.dirname(__FILE__))+"/defaults/application_js", "rb")
-# inject_into_file 'app/assets/javascripts/application.js', :after => "//= require_tree ." do
-#   "\n\n"+file.read
-# end
-# gsub_file 'app/assets/javascripts/application.js', /app_name/, "#{@appName}"
-
-# #
-# say "Ajout du dossier templates dans la configuration assets"
-# inject_into_file 'config/application.rb', :after => "Rails::Application" do
-#   "\n\t\tconfig.assets.paths << Rails.root.join('app', 'assets', 'templates')"
-# end
-
-# #
-# say "Prise en compte du HAML dans assets"
-# File.new("config/initializers/haml.rb", "w")
-# append_to_file 'config/initializers/haml.rb' do
-#   "\nRails.application.assets.register_engine '.haml', Tilt::HamlTemplate"
-# end
-# say "Mise en place de la gestion des partials dans les Haml d'Assets"
-# append_to_file 'config/initializers/haml.rb' do
-#   "\nRails.application.assets.context_class.class_eval do\n\tinclude HamlHelper\n\tend"
-# end
-# template File.expand_path(File.dirname(__FILE__))+"/defaults/haml_helper.rb.erb", "app/helpers/haml_helper.rb" 
-
-# git add: "-A"
-# git commit: '-m "Création de l\'architecture pour la gestion des templates angularjs"'
-
-# #
+##
 # say "Initialisation du generateur de scaffolding"
 # directory File.expand_path(File.dirname(__FILE__))+"/angular_template", "lib/generators/angular_template"
 

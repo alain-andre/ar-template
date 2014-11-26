@@ -15,19 +15,19 @@ class Translations
 
   private
 
-  attr_reader :available_locales
+    attr_reader :available_locales
 
-  def valid_locale?(lang)
-    available_locales.include?(lang)
-  end
+    def valid_locale?(lang)
+      available_locales.include?(lang)
+    end
 
-  def flatten_hash(hash, parent = [])
-    hash.flat_map do |key, value|
-      if value.is_a?(Hash)
-        flatten_hash(value, parent + [key])
-      else
-        {(parent + [key]).join('.') => value}
-      end
-    end.inject({}, :merge)
-  end
+    def flatten_hash(hash, parent = [])
+      hash.flat_map do |key, value|
+        if value.is_a?(Hash)
+          flatten_hash(value, parent + [key])
+        else
+          {(parent + [key]).join('.') => value}
+        end
+      end.inject({}, :merge)
+    end
 end

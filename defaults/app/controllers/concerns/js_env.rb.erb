@@ -16,7 +16,7 @@ module JsEnv
 
     <<-EOS.html_safe
       <script type="text/javascript">
-        shared = angular.module('<%= @appName %>')
+        shared = angular.module('<%= @AppName %>')
         shared.constant('Rails', #{data.to_json})
       </script>
     EOS

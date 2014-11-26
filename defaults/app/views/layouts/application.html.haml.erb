@@ -1,14 +1,14 @@
 !!!
-%html{ "ng-app" => "<%= @appName %>"}
+%html{ "ng-app" => "<%= @AppName %>"}
   %head
     %title @title
-    = stylesheet_link_tag    "application", media: 'all'
-    = javascript_include_tag "application"
-    = js_env
+    = stylesheet_link_tag "application", media: 'all'
     = csrf_meta_tags
   %body
-    = render "navbar"
+    = render "layouts/navbar"
     .container
       %div{ "ng-controller" => "FlashCtrl" }
-        = render "messages"
+        = render "layouts/messages"
         = yield
+        = javascript_include_tag 'application'
+        = js_env
