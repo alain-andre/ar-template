@@ -4,38 +4,39 @@ angular.module('<%= @AppName %>', [
   'pascalprecht.translate',
   'ui.bootstrap'
 ])
-  .factory 'railsLocalesLoader', ($http) ->
-    (options) ->
-      $http.get("locales/#{options.key}.json").then (response) ->
-        response.data
-      , (error) ->
-        throw options.key
 
-  .config ($provide, $httpProvider, $translateProvider, Rails) ->
+.factory 'railsLocalesLoader', ($http) ->
+  (options) ->
+    $http.get("locales/#{options.key}.json").then (response) ->
+      response.data
+    , (error) ->
+      throw options.key
 
-    # CSFR token
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] =
-      angular.element(document.querySelector('meta[name=csrf-token]')).attr('content')
+.config ($provide, $httpProvider, $translateProvider, Rails) ->
 
-    # Template cache
-    if Rails.env != 'development'
-      $provide.service '$templateCache', ['$angularCacheFactory', ($angularCacheFactory) ->
-        $angularCacheFactory('templateCache', {
-          maxAge: 3600000 * 24 * 7,
-          storageMode: 'localStorage',
-          recycleFreq: 60000
-        })
-      ]
+  # CSFR token
+  $httpProvider.defaults.headers.common['X-CSRF-Token'] =
+    angular.element(document.querySelector('meta[name=csrf-token]')).attr('content')
 
-    # Assets interceptor
-    $provide.factory 'railsAssetsInterceptor', ($angularCacheFactory) ->
-      request: (config) ->
-        if assetUrl = Rails.templates[config.url]
-          config.url = assetUrl
-        config
+  # Template cache
+  if Rails.env != 'development'
+    $provide.service '$templateCache', ['$angularCacheFactory', ($angularCacheFactory) ->
+      $angularCacheFactory('templateCache', {
+        maxAge: 3600000 * 24 * 7,
+        storageMode: 'localStorage',
+        recycleFreq: 60000
+      })
+    ]
 
-    $httpProvider.interceptors.push('railsAssetsInterceptor')
+  # Assets interceptor
+  $provide.factory 'railsAssetsInterceptor', ($angularCacheFactory) ->
+    request: (config) ->
+      if assetUrl = Rails.templates[config.url]
+        config.url = assetUrl
+      config
 
-    # Angular translate
-    $translateProvider.useLoader('railsLocalesLoader')
-    $translateProvider.preferredLanguage('en')
+  $httpProvider.interceptors.push('railsAssetsInterceptor')
+
+  # Angular translate
+  $translateProvider.useLoader('railsLocalesLoader')
+  $translateProvider.preferredLanguage('en')

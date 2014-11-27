@@ -55,6 +55,8 @@ git commit: '-m "Templating de config/application.rb"'
 
 # app/assets/javascripts/
 template "#{filesDir}/app/assets/javascripts/controllers/pages_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/pages_ctrl.js.coffee"
+template "#{filesDir}/app/assets/javascripts/controllers/heads_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/heads_ctrl.js.coffee"
+template "#{filesDir}/app/assets/javascripts/controllers/flashs_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/flashs_ctrl.js.coffee"
 template "#{filesDir}/app/assets/javascripts/services/.keep", "app/assets/javascripts/services/.keep"
 template "#{filesDir}/app/assets/javascripts/init.js.coffee.erb", "app/assets/javascripts/init.js.coffee"
 template "#{filesDir}/app/assets/javascripts/routes.js.coffee.erb", "app/assets/javascripts/routes.js.coffee"
@@ -64,6 +66,7 @@ git commit: '-m "Templating de assets/javascripts/"'
 
 # app/assets/stylesheets
 template "#{filesDir}/app/assets/stylesheets/application.css.scss", "app/assets/stylesheets/application.css.scss"
+FileUtils.rm("app/assets/stylesheets/application.css")
 git add: "-A"
 git commit: '-m "Templating de assets/stylesheets/"'
 
