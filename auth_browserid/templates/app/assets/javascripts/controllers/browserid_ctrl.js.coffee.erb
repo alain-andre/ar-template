@@ -1,0 +1,10 @@
+angular.module("<%= @AppName %>").controller "BrowseridCtrl", ($scope, $http) ->
+  $scope.myData = {};
+  $scope.myData.doClick = (item, event) ->
+    navigator.id.get (assertion) ->
+      if (assertion)
+        responsePromise = $http.post("/users/sign_in", {"assertion": assertion}, {cache: false});
+        responsePromise.success (data, status, headers, config) ->
+          window.location.href = '/';
+        responsePromise.error (data, status, headers, config) ->
+          alert("AJAX failed!");

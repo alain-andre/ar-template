@@ -90,10 +90,7 @@ run "rails generate devise:install"
 inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
   "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"
 end
-inject_into_file 'app/controllers/application_controller.rb', :after => "protect_from_forgery with: :exception" do
-  "\n\tbefore_filter :authenticate_user!"
-end
-run "rails generate devise User + force authentification"
+run "rails generate devise User"
 rake 'db:migrate'
 git add: "-A"
 git commit: '-m "Generation du User"'
