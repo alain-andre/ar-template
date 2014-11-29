@@ -85,7 +85,12 @@ git commit: '-m "Templating de app/services/"'
 # app/assets/templates/
 template "#{filesDir}/app/assets/templates/pages/index.html.haml.erb", "app/assets/templates/pages/index.html.haml"
 git add: "-A"
-git commit: '-m "Templating de assets/templates/"'
+git commit: '-m "Templating de app/assets/templates/"'
+
+# app/helpers/
+template "#{filesDir}/app/helpers/haml_helper.rb", "app/helpers/haml_helper.rb"
+git add: "-A"
+git commit: '-m "Templating de app/helpers/"'
 
 run "rails generate devise:install"
 inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
@@ -99,3 +104,7 @@ git commit: '-m "Generation du User"'
 directory File.expand_path(File.dirname(__FILE__))+"/auth_browserid", "lib/generators/auth_browserid"
 git add: "-A"
 git commit: '-m "Initialisation du generateur authentification par browserid"'
+
+directory File.expand_path(File.dirname(__FILE__))+"/angular_scaffold", "lib/generators/angular_scaffold"
+git add: "-A"
+git commit: '-m "Initialisation du generateur de scaffold AngularJS"'
