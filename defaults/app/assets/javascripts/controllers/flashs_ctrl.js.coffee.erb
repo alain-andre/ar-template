@@ -1,2 +1,4 @@
 angular.module('<%= @AppName %>').controller 'FlashsCtrl', ($scope, Rails) ->
-  
+  $scope.myData = {};
+  $scope.myData.doClick = (item, event) ->
+    document.getElementById(item).remove()

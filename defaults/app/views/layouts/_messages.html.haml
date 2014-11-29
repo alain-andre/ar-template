@@ -1,6 +1,6 @@
--# Rails flash messages styled for Bootstrap 3.0
+-# Rails flash messages styled for Bootstrap 3.0 and using angularjs
 - flash.each do |name, msg|
   - if msg.is_a?(String)
     %div{:class => "alert alert-#{name.to_s == 'notice' ? 'success' : 'danger'}"}
-      %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+      %button.close{ "ng-click" => "myData.doClick('flash_block_#{name}', $event)", "aria-hidden" => "true", "data-dismiss" => "alert", :type => "button" } &times;
       = content_tag :div, msg, :id => "flash_#{name}"
