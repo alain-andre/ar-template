@@ -46,44 +46,32 @@ class AuthBrowseridGenerator < Rails::Generators::Base
   end
 
   # Add browserid javascripts
-  # It will create the partial 'layouts/auth_browserid' showing a BrowserId button
   def add_browserid_js_tag
-    file = 'app/views/layouts/_auth_browserid.html.haml'
-    template file, file
-
     file = 'app/views/layouts/application.html.haml'
     if FileTest.exists?(file) then
       if File.readlines(file).grep(/browserid_js_tag/).size <= 0
         inject_into_file file, :before => /%body/ do
           "  = browserid_js_tag\n  "
         end
+        file = 'app/assets/javascripts/controllers/browserid_ctrl.js.coffee'
+        @AppName = Rails.application.class.name.split('::').first
+        template file+'.erb', file
       else
         say "'browserid_js_tag' already added !"
       end
     else
       say "'app/views/layouts/application.html.haml' does not exists !"
     end
+  end
 
-    file = 'app/views/layouts/_navbar.html.haml'
-    if FileTest.exists?(file) then
-      if File.readlines(file).grep(/auth_browserid/).size <= 0
-        if File.readlines(file).grep(/        - if user_signed_in?/).size > 0
-          File.open(file, 'a') do |f|
-            f.write "        - else\n          =render 'layouts/auth_browserid'\n"
-          end
-        else
-          say "Cannot find 'user_signed_in' condition; you must add =render 'layouts/auth_browserid' yourself"
-        end
-      else
-        say "'auth_browserid' render already added !"
-      end
-    else
-      say "'app/views/layouts/_navbar.html.haml' does not exists !"
-    end
+  # Template the login buttons
+  # It will create the partial 'layouts/auth_browserid' showing a BrowserId button
+  def render_the_login
+    file = 'app/views/layouts/_auth.html.haml'
+    template file, file
 
-    file = 'app/assets/javascripts/controllers/browserid_ctrl.js.coffee'
-    @AppName = Rails.application.class.name.split('::').first
-    template file+'.erb', file
+    file = 'app/views/layouts/_auth_browserid.html.haml'
+    template file, file
   end
 
 end

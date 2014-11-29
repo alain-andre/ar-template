@@ -28,6 +28,7 @@ git commit: '-m "Templating de app/controllers/"'
 # app/views/layouts/
 template "#{filesDir}/app/views/layouts/application.html.haml.erb", "app/views/layouts/application.html.haml"
 FileUtils.rm("app/views/layouts/application.html.erb")
+template "#{filesDir}/app/views/layouts/_auth.html.haml", "app/views/layouts/_auth.html.haml"
 template "#{filesDir}/app/views/layouts/_messages.html.haml", "app/views/layouts/_messages.html.haml"
 template "#{filesDir}/app/views/layouts/_navbar.html.haml.erb", "app/views/layouts/_navbar.html.haml"
 git add: "-A"

@@ -1,2 +1,6 @@
-%div{ "ng-controller" => "BrowseridCtrl" }
-  = link_to (image_tag "persona-button.png", :class => "persona-login-button", "ng-click" => "myData.doClick(item, $event)"), '#'
+- if user_signed_in?
+  %li{ "ng-controller" => "BrowseridCtrl" }
+    = link_to (image_tag "persona-signout.png", :class => "persona-button", "ng-click" => "myData.doClick('signout', $event)"), '#'
+- else
+  %li{ "ng-controller" => "BrowseridCtrl" }
+    = link_to (image_tag "persona-signin.png", :class => "persona-button", "ng-click" => "myData.doClick('signin', $event)"), '#'

@@ -11,4 +11,4 @@
   * Generate browser_id:install
   * Configure Devise for browserid_authenticatable
   * Add browserid javascripts
-    * It will create the partial 'layouts/auth_browserid' showing a BrowserId button
+  * Create the partial 'layouts/auth_browserid' showing a BrowserId button in the 'auth.html.haml' file
