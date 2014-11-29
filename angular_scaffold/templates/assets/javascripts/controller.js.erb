@@ -3,7 +3,7 @@
  */
 
 // Index
-<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>IndexController', ['$scope', '$http',
+angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>IndexCtrl', ['$scope', '$http',
   function($scope, $http){
     // Liste des <%= class_name.pluralize %>
     $http.get('api/v1/<%= class_name.tableize %>/').success(function(data) {
@@ -16,7 +16,7 @@
 ]);
 
 // Show
-<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>ShowController', ['$scope', '$routeParams', '$http',
+angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>ShowCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
     $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id).success(function(data) {
       $scope.<%= class_name %> = data;
@@ -25,7 +25,7 @@
 ]);
 
 // New
-<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>NewController', ['$scope', '$routeParams', '$http',
+angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>NewCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
     $http.get('api/v1/<%= class_name.tableize %>/new').success(function(data) {
       $scope.<%= class_name %> = data;
@@ -47,7 +47,7 @@
 ]);
 
 // Edit
-<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>EditController', ['$scope', '$routeParams', '$http',
+angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>EditCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
     $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id).success(function(data) {
       $scope.<%= class_name %> = data;
@@ -69,7 +69,7 @@
 ]);
 
 // Destroy
-<%= class_name.pluralize.camelize(:lower) %>ModuleControllers.controller('<%= class_name.camelize(:upper).pluralize %>DestroyController', ['$scope', '$routeParams', '$http',
+angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>DestroyCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http){
     $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id+"/edit").success(function(data) {
       $scope.<%= class_name %> = data;

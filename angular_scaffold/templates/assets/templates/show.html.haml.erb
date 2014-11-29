@@ -2,4 +2,4 @@
   = I18n.t(".detail_page", :default => "Detail page of %{product}", :product => "<%= class_name %>")
 
 %div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>ShowController"}
-  = render_haml("<%= class_name %>/_form.html.haml")
+  = render_haml("<%= class_name.underscore.pluralize %>/_form.html.haml")
