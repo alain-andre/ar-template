@@ -41,6 +41,7 @@ git commit: '-m "Templating de app/views/home/"'
 
 # config/initializers/
 template "#{filesDir}/config/initializers/sprockets.rb", "config/initializers/sprockets.rb"
+template "#{filesDir}/config/initializers/haml.rb", "config/initializers/haml.rb"
 git add: "-A"
 git commit: '-m "Templating de config/initializers/"'
 
