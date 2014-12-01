@@ -51,25 +51,25 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
       file = "app/assets/javascripts/routes.js.coffee"
       if FileTest.exists?(file) then
         if File.readlines(file).grep(/stateProvider/).size > 0
-          if File.readlines(file).grep(/#{class_name.pluralize}/).size <= 0
+          if File.readlines(file).grep(/#{class_name.underscore.pluralize}/).size <= 0
             open(file, 'a') { |f|
-              f.puts "\n  # #{class_name.pluralize}
-  $stateProvider.state('/#{class_name}', {
-    url: '/',
-    templateUrl: '#{class_name}/index.html',
+              f.puts "\n  # #{class_name.underscore.pluralize}
+  $stateProvider.state('#{class_name.camelize(:upper).pluralize}IndexCtrl', {
+    url: '/#{class_name.underscore.pluralize}',
+    templateUrl: '#{class_name.underscore.pluralize}/index.html',
     controller: '#{class_name.camelize(:upper).pluralize}IndexCtrl'
   })
-  $stateProvider.state('/#{class_name}/:id', {
-    url: '/',
-    templateUrl: '#{class_name}/show.html',
+  $stateProvider.state('#{class_name.camelize(:upper).pluralize}ShowCtrl', {
+    url: '/#{class_name.underscore.pluralize}/:id',
+    templateUrl: '#{class_name.underscore.pluralize}/show.html',
     controller: '#{class_name.camelize(:upper).pluralize}ShowCtrl'
   })"
             }
           else
-            say "Warning, #{class_name.pluralize} already set in file #{file}"
+            say "Warning, #{class_name.underscore.pluralize} already set in routes #{file}"
           end
         else
-          say "Warning, $stateProvider not found in file #{file}"
+          say "Warning, $stateProvider not found in routes #{file}"
         end
       else
         say "Error, cannot find file #{file}"
@@ -78,13 +78,22 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
 
     # Updates Rails routes with new api controller
     def update_routes
+      file = "config/routes.rb"
       # Routes for the views api (index, show)
-      inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
-        "\n\t##{class_name} controller api\n\tnamespace :api, defaults: {format: 'json'} do\n\t\tnamespace :v1 do\n\t\t\tresources :#{class_name.tableize}\n\t\tend\n\tend\n"
+      if File.readlines(file).grep(/##{class_name} controller api/).size <= 0
+        inject_into_file file, :before => /^end/ do
+          "\n  ##{class_name} controller api\n  namespace :api, defaults: {format: 'json'} do\n    namespace :v1 do\n      resources :#{class_name.tableize}\n    end\n  end\n"
+        end
+      else
+        say "Warning, #{class_name} controller api already set in routes #{file}"
       end
       # Routes needing an admin login (update, create, delete)
-      inject_into_file 'config/routes.rb', :after => "Application.routes.draw do" do
-        "\n\t##{class_name} controller admin\n\tnamespace :admin, defaults: {format: 'json'} do\n\t\tresources :#{class_name.tableize}\n\tend\n"
+      if File.readlines(file).grep(/##{class_name} controller admin/).size <= 0
+        inject_into_file file, :before => /^end/ do
+          "\n  ##{class_name} controller admin\n  namespace :admin, defaults: {format: 'json'} do\n    resources :#{class_name.tableize}\n  end\n"
+        end
+      else
+        say "Warning, #{class_name} controller admin already set in routes #{file}"
       end
     end
 

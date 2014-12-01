@@ -26,6 +26,7 @@ gem 'rails-assets-lodash'
 gem 'rails-assets-angular', '~> 1.2.0'
 gem 'rails-assets-angular-cache', '~> 2.3.4'
 gem 'rails-assets-angular-ui-router', '~> 0.2.9'
+gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-translate'
 gem 'rails-assets-angular-bootstrap'
 

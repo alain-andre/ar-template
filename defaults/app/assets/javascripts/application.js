@@ -3,6 +3,7 @@
 //= require angular
 //= require angular-cache
 //= require angular-ui-router
+//= require angular-route
 //= require angular-bootstrap
 //= require angular-translate
 //

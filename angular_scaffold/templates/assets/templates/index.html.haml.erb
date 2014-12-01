@@ -3,7 +3,7 @@
 
 %div
   %div{ :class => "col-md-6"}
-    %a{ "href" => "#/<%= class_name %>/0", :class => "btn btn-default" } 
+    %a{ "href" => "#/<%= class_name.underscore.pluralize %>/", :class => "btn btn-default" } 
       =I18n.t('.new', :default => 'New %{product}', :product => "<%= class_name %>") 
 
   %div{ :class => "col-md-6"}
@@ -21,5 +21,5 @@
 
 %ul
   %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
-    %a{ :href => "#/<%= class_name.pluralize %>/{{<%= class_name %>.id}}", :class => "btn btn-default" } {{<%= class_name %>.name}}
+    %a{ :href => "#/<%= class_name.underscore.pluralize %>/{{<%= class_name %>.id}}", :class => "btn btn-default" } {{<%= class_name %>.name}}
     %p {{<%= class_name %>.detail}}
