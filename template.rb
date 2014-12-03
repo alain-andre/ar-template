@@ -22,6 +22,9 @@ git commit: '-m "Templating de app/controllers/concerns/"'
 # app/controllers/
 template "#{filesDir}/app/controllers/application_controller.rb", "app/controllers/application_controller.rb"
 template "#{filesDir}/app/controllers/home_controller.rb", "app/controllers/home_controller.rb"
+template "#{filesDir}/app/controllers/api/base.rb", "app/controllers/api/base.rb"
+template "#{filesDir}/app/controllers/api/v1/base.rb", "app/controllers/api/v1/base.rb"
+template "#{filesDir}/app/controllers/api/v1/defaults.rb", "app/controllers/api/v1/defaults.rb"
 git add: "-A"
 git commit: '-m "Templating de app/controllers/"'
 
@@ -92,7 +95,7 @@ git commit: '-m "Templating de app/assets/templates/"'
 template "#{filesDir}/app/helpers/haml_helper.rb", "app/helpers/haml_helper.rb"
 git add: "-A"
 git commit: '-m "Templating de app/helpers/"'
-
+run "bundle install"
 run "rails generate devise:install"
 inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
   "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"

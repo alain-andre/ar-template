@@ -25,7 +25,12 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
   # Creates ruby controller for the view api and admin actions
   def template_ruby_controller
     template "controllers/api/v1/controller.rb.erb", "app/controllers/api/v1/#{class_name.tableize}_controller.rb"
-    template "controllers/admin/controller.rb.erb", "app/controllers/admin/#{class_name.tableize}_controller.rb"
+    file = "app/controllers/api/v1/base.rb"
+    if FileTest.exists?(file) then
+      inject_into_file file, :after => /Grape::API/ do
+        "\n      mount API::V1::#{class_name.camelize.pluralize}"
+      end
+    end
     template "test/controllers/controller_test.rb.erb", "app/test/controllers/#{class_name.tableize}_controller_test.rb"
     template "test/fixtures/test.yml", "app/test/fixtures/test_#{class_name.tableize}.yml"
     template "test/helpers/helper_test.rb.erb", "app/test/helpers/#{class_name.tableize}_helper_test.rb"

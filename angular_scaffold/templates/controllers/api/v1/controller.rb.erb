@@ -1,33 +1,64 @@
-module Api
-  module V1 
-    # API v1 for the controller <%= class_name %>
-    # * Standard response is in json
-    class <%= class_name.pluralize %>Controller < ApplicationController
-      before_action :set_<%= class_name.tableize.singularize %>, only: [:show]
-      respond_to :json
+# app/controllers/api/v1/<%= class_name.tableize.pluralize %>.rb
+module API
+  module V1
+    class <%= class_name.camelize(:upper).pluralize %> < Grape::API
+      include API::V1::Defaults 
 
-      # List all the <%= class_name %> of the DB
-      def index
-        respond_with <%= class_name.camelize(:upper) %>.all
-      end
-
-      # Return the demanded <%= class_name %>
-      def show
-        respond_with @<%= class_name.tableize.singularize %>
-      end
-
-      
-
-      private
-        # Use callbacks to share common setup or constraints between actions.
-        def set_<%= class_name.tableize.singularize %>
-          @<%= class_name.tableize.singularize %> = <%= class_name.camelize(:upper) %>.find(params[:id])
-        end
-
+      helpers do
         # Never trust parameters from the scary internet, only allow the white list through.
         def <%= class_name.tableize.singularize %>_params
           params[:<%= class_name.tableize.singularize %>]
         end
+      end
+
+      resource :<%= class_name.tableize.pluralize %> do
+
+        desc "Return list of <%= class_name.tableize.pluralize %>"
+        get do
+          <%= class_name.camelize(:upper) %>.all # obviously you never want to call #all here
+        end
+
+        desc "Return a <%= class_name.tableize.singularize %>."
+        params do
+          requires :id, type: Integer, desc: "<%= class_name.camelize(:upper) %> id."
+        end
+        route_param :id do
+          get do
+            <%= class_name.camelize(:upper) %>.find(params[:id])
+          end
+        end
+
+        desc "Create a <%= class_name.tableize.singularize %>."
+        params do
+          requires :<%= class_name.tableize.singularize %>, type: String, desc: "Your <%= class_name.tableize.singularize %>."
+        end
+        post do
+          authenticate!
+          <%= class_name.camelize(:upper) %>.
+            create!(<%= class_name.tableize.singularize %>_params)
+        end
+
+        desc "Update a <%= class_name.tableize.singularize %>."
+        params do
+          requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
+          requires :<%= class_name.tableize.singularize %>, type: String, desc: "Your <%= class_name.tableize.singularize %>."
+        end
+        put ':id' do
+          authenticate!
+          current_user.<%= class_name.tableize.pluralize %>.find(params[:id]).
+            update(<%= class_name.tableize.singularize %>_params)
+        end
+
+        desc "Delete a <%= class_name.tableize.singularize %>."
+        params do
+          requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
+        end
+        delete ':id' do
+          authenticate!
+          current_user.<%= class_name.tableize.pluralize %>.find(params[:id]).destroy
+        end
+
+      end
     end
   end
 end
