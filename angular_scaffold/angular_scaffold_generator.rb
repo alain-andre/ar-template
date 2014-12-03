@@ -11,6 +11,7 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
   def template_angular_template_file
     @AppName = Rails.application.class.name.split('::').first
     template "assets/javascripts/controller.js.erb", "app/assets/javascripts/controllers/#{class_name.underscore.pluralize}_ctrl.js"
+    template "assets/javascripts/service.js.erb", "app/assets/javascripts/services/#{class_name.underscore.pluralize}_srv.js.coffee"
     template "assets/templates/index.html.haml.erb", "app/assets/templates/#{class_name.underscore.pluralize}/index.html.haml"
     template "assets/templates/edit.html.haml.erb", "app/assets/templates/#{class_name.underscore.pluralize}/edit.html.haml"
     template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name.underscore.pluralize}/show.html.haml"
@@ -53,17 +54,30 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
         if File.readlines(file).grep(/stateProvider/).size > 0
           if File.readlines(file).grep(/#{class_name.underscore.pluralize}/).size <= 0
             open(file, 'a') { |f|
-              f.puts "\n  # #{class_name.underscore.pluralize}
-  $stateProvider.state('#{class_name.camelize(:upper).pluralize}IndexCtrl', {
+              f.puts "\n
+  # #{class_name.underscore.pluralize}
+  $stateProvider.state('#{class_name.underscore.pluralize}', { 
+    # state for showing all #{class_name.underscore.pluralize}
     url: '/#{class_name.underscore.pluralize}',
     templateUrl: '#{class_name.underscore.pluralize}/index.html',
-    controller: '#{class_name.camelize(:upper).pluralize}IndexCtrl'
-  })
-  $stateProvider.state('#{class_name.camelize(:upper).pluralize}ShowCtrl', {
-    url: '/#{class_name.underscore.pluralize}/:id',
+    controller: '#{class_name.camelize(:upper)}ListCtrl'
+  }).state('view#{class_name.camelize(:upper)}', { 
+    #state for showing single #{class_name.camelize(:upper)}
+    url: '/#{class_name.underscore.pluralize}/:id/view',
     templateUrl: '#{class_name.underscore.pluralize}/show.html',
-    controller: '#{class_name.camelize(:upper).pluralize}ShowCtrl'
-  })"
+    controller: '#{class_name.camelize(:upper)}ViewCtrl'
+  }).state('new#{class_name.camelize(:upper)}', { 
+    #state for adding a new #{class_name.camelize(:upper)}
+    url: '/#{class_name.underscore.pluralize}/new',
+    templateUrl: '#{class_name.underscore.pluralize}/new.html',
+    controller: '#{class_name.camelize(:upper)}CreateCtrl'
+  }).state('edit#{class_name.camelize(:upper)}', { 
+    #state for updating a #{class_name.camelize(:upper)}
+    url: '/#{class_name.underscore.pluralize}/:id/edit',
+    templateUrl: '#{class_name.underscore.pluralize}/edit.html',
+    controller: '#{class_name.camelize(:upper)}EditCtrl'
+  })
+"
             }
           else
             say "Warning, #{class_name.underscore.pluralize} already set in routes #{file}"

@@ -1,0 +1,7 @@
+angular.module('<%= @AppName %>').factory('<%= class_name.camelize(:upper) %>', ['$resource',
+  ($resource) ->
+    $resource('api/v1/<%= class_name.underscore.pluralize %>/:id', 
+      { id: '@_id' }, 
+      { update: { method: 'PUT' } }
+    )
+])

@@ -1,91 +1,37 @@
-/**
- * Contrôleur dans le module <%= class_name %>sModuleControllers
- */
-
-// Index
-angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>IndexCtrl', ['$scope', '$http',
-  function($scope, $http){
-    // Liste des <%= class_name.pluralize %>
-    $http.get('api/v1/<%= class_name.tableize %>/').success(function(data) {
-      $scope.<%= class_name.pluralize %> = data;
+angular.module('<%= @AppName %>')
+  .controller('<%= class_name.camelize(:upper) %>ListCtrl', function($scope, $state, $window, <%= class_name.camelize(:upper) %>) {
+  $scope.<%= class_name.underscore %>s = <%= class_name.camelize(:upper) %>.query(); //fetch all <%= class_name.underscore %>s. Issues a GET to /api/<%= class_name.underscore %>s
+ 
+  $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>s/:id
+    if ($window.confirm('Really delete this?')) {
+      <%= class_name.underscore %>.$delete(function() {
+        $window.location.href = ''; //redirect to home
+      });
+    }
+  };
+})
+.controller('<%= class_name.camelize(:upper) %>ViewCtrl', function($scope, $stateParams, <%= class_name.camelize(:upper) %>) {
+  $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id }); //Get a single <%= class_name.underscore %>.Issues a GET to /api/<%= class_name.underscore %>s/:id
+})
+.controller('<%= class_name.camelize(:upper) %>CreateCtrl', function($scope, $state, $stateParams, <%= class_name.camelize(:upper) %>) {
+  $scope.<%= class_name.underscore %> = new <%= class_name.camelize(:upper) %>();  //create new <%= class_name.underscore %> instance. Properties will be set via ng-model on UI
+ 
+  $scope.add<%= class_name.camelize(:upper) %> = function() { //create a new <%= class_name.underscore %>. Issues a POST to /api/<%= class_name.underscore %>s
+    $scope.<%= class_name.underscore %>.$save(function() {
+      $state.go('<%= class_name.underscore %>s'); // on success go back to home i.e. <%= class_name.underscore %>s state.
     });
-
-    $scope.<%= class_name %>Order = "";
-    $scope.<%= class_name %>Query = "";
-  }
-]);
-
-// Show
-angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>ShowCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id).success(function(data) {
-      $scope.<%= class_name %> = data;
+  };
+})
+.controller('<%= class_name.camelize(:upper) %>EditCtrl', function($scope, $state, $stateParams, <%= class_name.camelize(:upper) %>) {
+  $scope.update<%= class_name.camelize(:upper) %> = function() { //Update the edited <%= class_name.underscore %>. Issues a PUT to /api/<%= class_name.underscore %>s/:id
+    $scope.<%= class_name.underscore %>.$update(function() {
+      $state.go('<%= class_name.underscore %>s'); // on success go back to home i.e. <%= class_name.underscore %>s state.
     });
-  }
-]);
-
-// New
-angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>NewCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name.tableize %>/new').success(function(data) {
-      $scope.<%= class_name %> = data;
-    });
-
-  // Create
-    $scope.submit = function() {
-      if($scope.<%= class_name %>.name){
-        $http({method: 'POST', url: 'admin/<%= class_name.tableize %>', data: $scope.result}).
-          success(function(data, status, headers, config) {
-            alert('success');
-          }).
-          error(function(data, status, headers, config) {
-            alert('error');
-          });
-      }
-    };
-  }
-]);
-
-// Edit
-angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>EditCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id).success(function(data) {
-      $scope.<%= class_name %> = data;
-    });
-
-  // PATCH/PUT Update
-    $scope.submit = function() {
-      if($scope.<%= class_name %>.name){
-        $http({method: 'PUT', url: 'admin/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id, data: $scope.result}).
-          success(function(data, status, headers, config) {
-            alert('success');
-          }).
-          error(function(data, status, headers, config) {
-            alert('error');
-          });
-      }
-    };
-  }
-]);
-
-// Destroy
-angular.module("<%= @AppName %>").controller('<%= class_name.camelize(:upper).pluralize %>DestroyCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http){
-    $http.get('api/v1/<%= class_name.tableize %>/' + $routeParams.<%= class_name %>Id+"/edit").success(function(data) {
-      $scope.<%= class_name %> = data;
-    });
-
-  // DELETE Delete
-    $scope.submit = function() {
-      if($scope.<%= class_name %>.name){
-        $http({method: 'DELETE', url: 'admin/<%= class_name.tableize %>/destroy?id=' + $routeParams.<%= class_name %>Id, data: $scope.result}).
-          success(function(data, status, headers, config) {
-            alert('success');
-          }).
-          error(function(data, status, headers, config) {
-            alert('error');
-          });
-      }
-    };
-  }
-]);
+  };
+ 
+  $scope.load<%= class_name.camelize(:upper) %> = function() { //Issues a GET request to /api/<%= class_name.underscore %>s/:id to get a <%= class_name.underscore %> to update
+    $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id });
+  };
+ 
+  $scope.load<%= class_name.camelize(:upper) %>(); // Load a <%= class_name.underscore %> which can be edited on UI
+});

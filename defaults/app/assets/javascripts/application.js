@@ -6,6 +6,7 @@
 //= require angular-route
 //= require angular-bootstrap
 //= require angular-translate
+//= require angular-resource
 //
 //= require ./init
 //= require ./routes

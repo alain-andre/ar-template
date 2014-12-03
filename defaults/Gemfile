@@ -29,6 +29,7 @@ gem 'rails-assets-angular-ui-router', '~> 0.2.9'
 gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-translate'
 gem 'rails-assets-angular-bootstrap'
+gem 'rails-assets-angular-resource'
 
 group :production do
   gem 'pg'
