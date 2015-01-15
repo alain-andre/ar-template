@@ -11,9 +11,9 @@ And the possibility of generating angularjs scaffold of a Thing
 `rails generate angular_scaffold Thing` 
 
 # Benefits
-  * Utiliser erb et haml dans les fichiers JS
-  * Rendre des partiels dans les templates haml d'assets
-  * Utilisation de la structure i18 pour les fichiers 
+  * Use erb and haml in JS files (assets)
+  * Use partials in haml templates
+  * Using the i18 power for files structure
 
 # Generators
   * [angular_scaffold](https://github.com/alain-andre/ar-template/tree/master/angular_scaffold)
