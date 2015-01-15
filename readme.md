@@ -20,6 +20,6 @@ And the possibility of generating angularjs scaffold of a Thing
   * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/auth_browserid)
 
 # Todo
-  * Put the I18 files into AngularJS translate
+  * Create the I18 files for the generated angular_scaffold (at least in english)
   * Make the angular_scaffold generator allow offline actions (atm only ping api)
   * Migrate JS files into coffee
