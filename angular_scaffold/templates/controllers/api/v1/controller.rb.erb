@@ -1,4 +1,4 @@
-# app/controllers/api/v1/<%= class_name.tableize.pluralize %>.rb
+# app/controllers/api/v1/<%= class_name.tableize%>.rb
 module API
   module V1
     class <%= class_name.camelize(:upper).pluralize %> < Grape::API
@@ -6,19 +6,19 @@ module API
 
       helpers do
         # Never trust parameters from the scary internet, only allow the white list through.
-        def <%= class_name.tableize.singularize %>_params
-          params[:<%= class_name.tableize.singularize %>]
+        def <%= class_name.underscore %>_params
+          params.require(:<%= class_name.underscore %>).permit(<%= @attributes.map { |a| ":#{a.name}" }.join(", ") %>)
         end
       end
 
-      resource :<%= class_name.tableize.pluralize %> do
+      resource :<%= class_name.tableize%> do
 
-        desc "Return list of <%= class_name.tableize.pluralize %>"
+        desc "Return list of <%= class_name.tableize%>"
         get do
           <%= class_name.camelize(:upper) %>.all # obviously you never want to call #all here
         end
 
-        desc "Return a <%= class_name.tableize.singularize %>."
+        desc "Return a <%= class_name.underscore %>."
         params do
           requires :id, type: Integer, desc: "<%= class_name.camelize(:upper) %> id."
         end
@@ -28,34 +28,34 @@ module API
           end
         end
 
-        desc "Create a <%= class_name.tableize.singularize %>."
+        desc "Create a <%= class_name.underscore %>."
         params do
-          requires :<%= class_name.tableize.singularize %>, type: String, desc: "Your <%= class_name.tableize.singularize %>."
+          requires :<%= class_name.underscore %>, type: String, desc: "Your <%= class_name.underscore %>."
         end
         post do
           authenticate!
           <%= class_name.camelize(:upper) %>.
-            create!(<%= class_name.tableize.singularize %>_params)
+            create!(<%= class_name.underscore %>_params)
         end
 
-        desc "Update a <%= class_name.tableize.singularize %>."
+        desc "Update a <%= class_name.underscore %>."
         params do
           requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
-          requires :<%= class_name.tableize.singularize %>, type: String, desc: "Your <%= class_name.tableize.singularize %>."
+          requires :<%= class_name.underscore %>, type: String, desc: "Your <%= class_name.underscore %>."
         end
         put ':id' do
           authenticate!
-          current_user.<%= class_name.tableize.pluralize %>.find(params[:id]).
-            update(<%= class_name.tableize.singularize %>_params)
+          current_user.<%= class_name.tableize%>.find(params[:id]).
+            update(<%= class_name.underscore %>_params)
         end
 
-        desc "Delete a <%= class_name.tableize.singularize %>."
+        desc "Delete a <%= class_name.underscore %>."
         params do
           requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
         end
         delete ':id' do
           authenticate!
-          current_user.<%= class_name.tableize.pluralize %>.find(params[:id]).destroy
+          current_user.<%= class_name.tableize%>.find(params[:id]).destroy
         end
 
       end

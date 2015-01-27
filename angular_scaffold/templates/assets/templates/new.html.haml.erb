@@ -1,7 +1,7 @@
 %h4
-  = I18n.t(".creation_page", :default => "Creation page of %{product}", :product => "<%= class_name %>")
+  = { "translate" => 'creation_page' } 
 
 %div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>EditController"}
-  = render_haml("<%= class_name.underscore.pluralize %>/_form.html.haml")
+  = render_haml("<%= class_name.tableize %>/_form.html.haml")
   .form-group
-    %input{ :type => "submit", :id => "submit", :value => I18n.t('save', :default => 'Save'), :class => "btn btn-default" }
+    %form{"ng-submit" => "addPhone()"}

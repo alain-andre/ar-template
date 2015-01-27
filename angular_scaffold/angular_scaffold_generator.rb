@@ -27,8 +27,7 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name.tableize}/show.html.haml"
     template "assets/templates/new.html.haml.erb", "app/assets/templates/#{class_name.tableize}/new.html.haml"
     template "assets/templates/_form.html.haml.erb", "app/assets/templates/#{class_name.tableize}/_form.html.haml"
-    # modify the templated files
-    #update_init
+    # AngularJS routes
     update_application
   end
 
@@ -46,10 +45,10 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     template "test/helpers/helper_test.rb.erb", "app/test/helpers/#{class_name.tableize}_helper_test.rb"
     # Create the model
     template "models/model.rb", "app/models/#{class_name.underscore}.rb"
-    # Create the controller
-    template "controllers/controller.rb", "app/controllers/#{class_name.tableize}_controller.rb"
     # Create the migration
     template "db/migrate/migration.rb", "app/db/migrate/#{Time.now.strftime("%Y%m%d%H%M")}_create_#{class_name.tableize}.rb"
+    # I18
+    template "config/locales/en.rb", "config/locales/#{class_name.underscore}.en.yml"
   end
 
   private
