@@ -4,7 +4,7 @@ Generate a angularjs scaffold for the given arguments.
 # Example:
 
 ```cmd
-  rails generate angular_scaffold Thing
+  rails generate angular_scaffold thing name:string description:text price:decimal
 ```
 
 ## This will create:
@@ -17,4 +17,3 @@ Generate a angularjs scaffold for the given arguments.
     * _form.html.haml
   * Creates ruby controller for the view api and admin actions
   * Add the new AngularJS routes in `app/assets/javascripts/routes.js.coffee`
-  * Updates Rails routes with new api controller
