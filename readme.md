@@ -1,5 +1,5 @@
 # Objective
-Make available a project model that allows to generate an AngularJS scaffold
+Creates a project that allows to generate an AngularJS scaffold. The project template configure Rails with AngularJS based on [monterail](http://monterail.com/) idea and a mix of my [ideas](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/). Once created, the project can generate **angular_scaffold** wich include **migration**, **api**, **controller**, **model** and **CRUD templates**.
 
 # Example :
 `rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle`
@@ -7,8 +7,8 @@ Make available a project model that allows to generate an AngularJS scaffold
 Then comes the possibility to insert a browserid authentication :
 `rails g auth_browserid`
 
-And the possibility of generating angularjs scaffold of a Thing
-`rails generate angular_scaffold Thing` 
+And the possibility of generating angularjs scaffold of a Thing with ts composition
+`rails generate angular_scaffold thing name:string description:text price:decimal` 
 
 # Benefits
   * Use erb and haml in JS files (assets)
