@@ -29,8 +29,10 @@ module API
         end
 
         desc "Create a <%= class_name.underscore %>."
-        params do
-          requires :<%= class_name.underscore %>, type: String, desc: "Your <%= class_name.underscore %>."
+        params do # Select required fields
+        <%- for attribute in @attributes -%>
+          # requires :<%= attribute.name %>, type: <%= attribute.type %>, desc: "Your required <%= attribute.name %>."
+        <%- end -%>
         end
         post do
           authenticate!
@@ -41,7 +43,9 @@ module API
         desc "Update a <%= class_name.underscore %>."
         params do
           requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
-          requires :<%= class_name.underscore %>, type: String, desc: "Your <%= class_name.underscore %>."
+        <%- for attribute in @attributes -%>
+          # requires :<%= attribute.name %>, type: <%= attribute.type %>, desc: "Your required <%= attribute.name %>."
+        <%- end -%>
         end
         put ':id' do
           authenticate!

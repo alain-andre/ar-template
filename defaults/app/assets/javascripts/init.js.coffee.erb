@@ -20,6 +20,9 @@ angular.module('<%= @AppName %>', [
   $httpProvider.defaults.headers.common['X-CSRF-Token'] =
     angular.element(document.querySelector('meta[name=csrf-token]')).attr('content')
 
+  # Authorization
+  $httpProvider.defaults.headers.common['Authorization'] = 'some token'
+
   # Template cache
   if Rails.env != 'development'
     $provide.service '$templateCache', ['$angularCacheFactory', ($angularCacheFactory) ->
