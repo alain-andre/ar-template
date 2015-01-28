@@ -1,25 +1,27 @@
-%h4 
-  =I18n.t('.list_of', :default => 'List of %{product}', :product => "<%= class_name.pluralize %>")
+%div{"ng-controller" => "<%= class_name.camelize(:upper) %>ListCtrl"} 
+  %h4{ "translate" => "<%= class_name.underscore %>.list_of" }
 
-%div
-  %div{ :class => "col-md-6"}
-    %a{ "href" => "#/<%= class_name.tableize %>/", :class => "btn btn-default" } 
-      =I18n.t('.new', :default => 'New %{product}', :product => "<%= class_name %>") 
+  %div
+    %div{ :class => "col-md-6"}
+      %a{ "href" => "#/<%= class_name.tableize %>/new", :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.new" }
 
-  %div{ :class => "col-md-6"}
-    %label
-      =I18n.t('.search', :default => 'Search')
-    %input{ "ng-model" => "<%= class_name %>Query", :class => "form-control" }
-    
-    %label
-      =I18n.t('.sort_by', :default => 'Sort by')
-    %select{ "ng-model" => "<%= class_name %>Order", :class => "form-control" }
-      %option{ :value => "name" } 
-        =I18n.t('.alphabetical', :default => 'Alphabetical')
-      %option{ :value => "created_at" } 
-        =I18n.t('.latest', :default => 'Latest')
+    %div{ :class => "col-md-6"}
+      %label{ "translate" => "<%= class_name.underscore %>.search" }
+      %input{ "ng-model" => "<%= class_name %>Query", :class => "form-control" }
+      
+      %label{ "translate" => "<%= class_name.underscore %>.sort_by" }
+      %select{ "ng-model" => "<%= class_name %>Order", :class => "form-control" }
+        %option{ :value => "name", "translate" => "<%= class_name.underscore %>.alphabetical" }
+        %option{ :value => "created_at", "translate" => "<%= class_name.underscore %>.latest" }
 
-%ul
-  %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
-    %a{ :href => "#/<%= class_name.tableize %>/{{<%= class_name %>.id}}", :class => "btn btn-default" } {{<%= class_name %>.name}}
-    %p {{<%= class_name %>.detail}}
+  %ul
+    %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
+  <%- @attributes.each do |attribute| %>
+    <%- if attribute.type == "text" %>
+      %p {{<%= class_name %>.<%= attribute.name %>}}
+    <%- else %>
+      %label {{<%= class_name %>.<%= attribute.name %>}}
+    <%- end %>
+  <%- end %>
+      %a{ "ui-sref" => "view<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>._id})", :class => "btn btn-default"}= { "translate" => "<%= class_name.underscore %>.view" }
+      %a{ "ui-sref" => "edit<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>._id})", :class => "btn btn-default"}= { "translate" => "<%= class_name.underscore %>.edit" }

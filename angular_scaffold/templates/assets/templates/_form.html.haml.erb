@@ -1,15 +1,22 @@
-%form{:name => "<%= class_name %>Form", "ng-submit" => "submit()"}
-  .form-group
-    %label 
-      =I18n.t('.name_of', :default => "%{product}'s name", :product => "<%= class_name %>")
-    %input{ :name => "id", :type => "hidden", "ng-model" => "<%= class_name %>.id"}
-    %input{ :name => "name", :class => "form-control", "ng-model" => "<%= class_name %>.name", "ng-minlength" => "3", "ng-maxlength" => "20", "required" => "required"}
-    %span{ "ng-show" => "<%= class_name %>Form.name.$error.minlength", :class => "help-block"} 
-      =I18n.t('.must_be_caracters_at_least', :default => 'Must be at least %{nb} caracters', :nb => 3)
-    %span{ "ng-show" => "<%= class_name %>Form.name.$error.maxlength", :class => "help-block"} 
-      =I18n.t('.must_be_caracters_maximum', :default => 'Must be at maximum %{nb} caracters', :nb => 20)
-
-  .form-group
-    %label 
-      =I18n.t('.product_details', :default => "%{product}'s details", :product => "<%= class_name %>") 
-    %textarea{ :name => "detail", :class => "form-control", "ng-model" => "<%= class_name %>.detail" }
+%input{ :name => "id", :type => "hidden", "ng-model" => "<%= class_name.underscore %>.id"}
+<%- @attributes.each do |attribute| %>
+.form-group
+<%- if attribute.type == "string" %>
+  %label{ "translate" => "<%= class_name.underscore %>.string" } 
+  %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>", "ng-minlength" => "3", "ng-maxlength" => "20", "required" => "required"}
+  %span{ "ng-show" => "<%= class_name %>Form.name.$error.minlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_at_least" }
+  %span{ "ng-show" => "<%= class_name %>Form.name.$error.maxlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_maximum" }
+<%- end %>
+<%- if attribute.type == "text" %>
+  %label{ "translate" => "<%= class_name.underscore %>.textarea" } 
+  %textarea{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+<%- end %>
+<%- if attribute.type == "integer" %>
+  %label{ "translate" => "<%= class_name.underscore %>.integer" } 
+  %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+<%- end %>
+<%- if attribute.type == "decimal" %>
+  %label{ "translate" => "<%= class_name.underscore %>.decimal" } 
+  %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+<%- end %>
+<%- end %>

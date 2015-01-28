@@ -1,8 +1,8 @@
-%h4
-  = I18n.t(".edition_page", :default => "Edition page of %{product}", :product => "<%= class_name %>")
+%div{"ng-controller" => "<%= class_name.camelize(:upper) %>ListCtrl"} 
+  %h4{ "translate" => "<%= class_name.underscore %>.edition_page" } 
 
-%div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>DeleteController"}
-  = render_haml("<%= class_name.tableize %>/_form.html.haml")
-  .form-group
-    %input{ :type => "submit", :id => "submit", :value => I18n.t('edit', :default => 'Edit'), :class => "btn btn-default" }
-    %input{ :type => "submit", :id => "submit", :value => I18n.t('delete', :default => 'Delete'), :class => "btn btn-default" }
+  %form{ "ng-submit" => "update<%= class_name.camelize(:upper) %>()", :name => "<%= class_name %>Form" }
+    = render_haml("<%= class_name.tableize %>/_form.html.haml")
+    .form-group 
+      %a{ :class => "btn btn-danger", "ng-click" => "delete<%= class_name.camelize(:upper) %>(<%= class_name.underscore %>)",  "translate" => "<%= class_name.underscore %>.delete" } 
+      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.create" }

@@ -1,7 +1,7 @@
-%h4
-  = { "translate" => 'creation_page' } 
+%div{ "ng-controller" => "<%= class_name.camelize(:upper) %>CreateCtrl" }
+  %h4{ "translate" => "<%= class_name.underscore %>.creation_page" } 
 
-%div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>EditController"}
-  = render_haml("<%= class_name.tableize %>/_form.html.haml")
-  .form-group
-    %form{"ng-submit" => "addPhone()"}
+  %form{"ng-submit" => "add<%= class_name.camelize(:upper) %>()", :name => "<%= class_name %>Form"}
+    = render_haml("<%= class_name.tableize %>/_form.html.haml")
+    .form-group
+      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.create" }

@@ -46,7 +46,7 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     # Create the model
     template "models/model.rb", "app/models/#{class_name.underscore}.rb"
     # Create the migration
-    template "db/migrate/migration.rb", "app/db/migrate/#{Time.now.strftime("%Y%m%d%H%M")}_create_#{class_name.tableize}.rb"
+    template "db/migrate/migration.rb", "db/migrate/#{Time.now.strftime("%Y%m%d%H%M")}_create_#{class_name.tableize}.rb"
     # I18
     template "config/locales/en.rb", "config/locales/#{class_name.underscore}.en.yml"
   end

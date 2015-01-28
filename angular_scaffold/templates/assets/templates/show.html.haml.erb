@@ -1,5 +1,11 @@
-%h4
-  = I18n.t(".detail_page", :default => "Detail page of %{product}", :product => "<%= class_name %>")
-
-%div{"ng-controller" => "<%= class_name.camelize(:upper).pluralize %>ShowController"}
-  = render_haml("<%= class_name.tableize %>/_form.html.haml")
+%div{"ng-controller" => "<%= class_name.camelize(:upper) %>ViewCtrl"}
+  %h4{ "translate" => "<%= class_name.underscore %>.detail_page" } 
+  
+  %div
+<%- @attributes.each do |attribute| %>
+  <%- if attribute.type == "text" %>
+    %p {{<%= class_name %>.<%= attribute.name %>}}
+  <%- else %>
+    %label {{<%= class_name %>.<%= attribute.name %>}}
+  <%- end %>
+<%- end %>
