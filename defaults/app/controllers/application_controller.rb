@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Define if the current_user is allowed to CRUD.
   def is_admin?
     if current_user
-      return true if current_user.is_admin
+      return true if current_user.is_admin?
     end
   end 
 end

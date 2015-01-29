@@ -104,9 +104,10 @@ end
 run "rails generate devise User"
 template "#{filesDir}/db/migrate/add_role_to_users.rb", "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
 inject_into_file 'app/models/user.rb', :after => "Base" do
-  "\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n  "
+  "\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n  "
 end
 rake 'db:migrate'
+open('db/seeds.rb', 'a') { |f| f.puts "\nUser.last.update(:role => 1)" }
 git add: "-A"
 git commit: '-m "Generation du User"'
 

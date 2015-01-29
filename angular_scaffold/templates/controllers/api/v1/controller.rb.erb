@@ -35,7 +35,7 @@ module API
         <%- end -%>
         end
         post do
-          authenticate!
+          admin!
           <%= class_name.camelize(:upper) %>.
             create!(<%= class_name.underscore %>_params)
         end
@@ -48,7 +48,7 @@ module API
         <%- end -%>
         end
         put ':id' do
-          authenticate!
+          admin!
           current_user.<%= class_name.tableize%>.find(params[:id]).
             update(<%= class_name.underscore %>_params)
         end
@@ -58,7 +58,7 @@ module API
           requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
         end
         delete ':id' do
-          authenticate!
+          admin!
           current_user.<%= class_name.tableize%>.find(params[:id]).destroy
         end
 
