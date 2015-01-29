@@ -1,6 +1,8 @@
 # Objective
 Creates a project that allows to generate an AngularJS scaffold. The project template configure Rails with AngularJS based on [monterail](http://monterail.com/) idea and a mix of my [ideas](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/). Once created, the project can generate **angular_scaffold** wich include **migration**, **api**, **controller**, **model** and **CRUD templates**.
 
+CRUD is allowed to only admin users. A **role** is added to [Devise](https://github.com/plataformatec/devise) user and set by default to 0 (lambda) on creation. The `javascripts/routes` will then use the [Rails JS environment](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/) to allow or not access to admin templates.
+
 # Example :
 `rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle`
 
@@ -20,6 +22,5 @@ And the possibility of generating angularjs scaffold of a Thing with ts composit
   * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/auth_browserid)
 
 # Todo
-  * Create the I18 files for the generated angular_scaffold (at least in english)
   * Make the angular_scaffold generator allow offline actions (atm only ping api)
   * Migrate JS files into coffee
