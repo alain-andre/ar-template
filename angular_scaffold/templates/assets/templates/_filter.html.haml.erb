@@ -1,0 +1,7 @@
+%label{ "translate" => "<%= class_name.underscore %>.search" }
+%input{ "ng-model" => "<%= class_name %>Query", :class => "form-control" }
+
+%label{ "translate" => "<%= class_name.underscore %>.sort_by" }
+%select{ "ng-model" => "<%= class_name %>Order", :class => "form-control" }
+  %option{ :value => "name", "translate" => "<%= class_name.underscore %>.alphabetical" }
+  %option{ :value => "created_at", "translate" => "<%= class_name.underscore %>.latest" }

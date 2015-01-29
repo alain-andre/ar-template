@@ -22,7 +22,9 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     @AppName = Rails.application.class.name.split('::').first
     template "assets/javascripts/controller.js.erb", "app/assets/javascripts/controllers/#{class_name.tableize}_ctrl.js"
     template "assets/javascripts/service.js.erb", "app/assets/javascripts/services/#{class_name.tableize}_srv.js.coffee"
+    template "assets/templates/_filter.html.haml.erb", "app/assets/templates/#{class_name.tableize}/_filter.html.haml"
     template "assets/templates/index.html.haml.erb", "app/assets/templates/#{class_name.tableize}/index.html.haml"
+    template "assets/templates/admin.html.haml.erb", "app/assets/templates/#{class_name.tableize}/admin.html.haml"
     template "assets/templates/edit.html.haml.erb", "app/assets/templates/#{class_name.tableize}/edit.html.haml"
     template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name.tableize}/show.html.haml"
     template "assets/templates/new.html.haml.erb", "app/assets/templates/#{class_name.tableize}/new.html.haml"
@@ -72,19 +74,26 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     url: '/#{class_name.tableize}/:id/view',
     templateUrl: '#{class_name.tableize}/show.html',
     controller: '#{class_name.camelize(:upper)}ViewCtrl'
-  }).state('new#{class_name.camelize(:upper)}', { 
-    #state for adding a new #{class_name.camelize(:upper)}
-    url: '/#{class_name.tableize}/new',
-    templateUrl: '#{class_name.tableize}/new.html',
-    controller: '#{class_name.camelize(:upper)}CreateCtrl'
-  }).state('edit#{class_name.camelize(:upper)}', { 
-    #state for updating a #{class_name.camelize(:upper)}
-    url: '/#{class_name.tableize}/:id/edit',
-    templateUrl: '#{class_name.tableize}/edit.html',
-    controller: '#{class_name.camelize(:upper)}EditCtrl'
   })
-"
-            }
+  if Rails.is_admin
+    # #{class_name.tableize} : admin actions
+    $stateProvider.state('admin#{class_name.camelize(:upper)}', { 
+      # state for showing all #{class_name.tableize}
+      url: '/admin/#{class_name.tableize}',
+      templateUrl: '#{class_name.tableize}/admin.html',
+      controller: '#{class_name.camelize(:upper)}ListCtrl'
+    }).state('new#{class_name.camelize(:upper)}', { 
+      #state for adding a new #{class_name.camelize(:upper)}
+      url: '/admin/#{class_name.tableize}/new',
+      templateUrl: '#{class_name.tableize}/new.html',
+      controller: '#{class_name.camelize(:upper)}CreateCtrl'
+    }).state('edit#{class_name.camelize(:upper)}', { 
+      #state for updating a #{class_name.camelize(:upper)}
+      url: '/admin/#{class_name.tableize}/:id/edit',
+      templateUrl: '#{class_name.tableize}/edit.html',
+      controller: '#{class_name.camelize(:upper)}EditCtrl'
+    })"
+              }
           else
             say "Warning, #{class_name.tableize} already set in routes #{file}"
           end
