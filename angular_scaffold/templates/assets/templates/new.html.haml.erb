@@ -4,4 +4,4 @@
   %form{"ng-submit" => "add<%= class_name.camelize(:upper) %>()", :name => "<%= class_name %>Form"}
     = render_haml("<%= class_name.tableize %>/_form.html.haml")
     .form-group
-      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.create" }
+      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.create_button" }

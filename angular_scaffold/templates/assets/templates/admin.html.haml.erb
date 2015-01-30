@@ -9,13 +9,13 @@
       = render_haml("<%= class_name.tableize %>/_filter.html.haml")
     %div{ :class => "col-md-8"}
       %ul
-        %li{ "ng-repeat" => "<%= class_name %> in <%= class_name.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
+        %li{ "ng-repeat" => "<%= class_name.underscore %> in <%= class_name.underscore.pluralize %> | filter:<%= class_name %>Query | orderBy:<%= class_name %>Order"}
       <%- @attributes.each do |attribute| %>
         <%- if attribute.type == "text" %>
-          %p {{<%= class_name %>.<%= attribute.name %>}}
+          %p {{<%= class_name.underscore %>.<%= attribute.name %>}}
         <%- else %>
-          %label {{<%= class_name %>.<%= attribute.name %>}}
+          %label {{<%= class_name.underscore %>.<%= attribute.name %>}}
         <%- end %>
       <%- end %>
-          %a{ "ui-sref" => "view<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>._id})", :class => "btn btn-default"}= { "translate" => "<%= class_name.underscore %>.view" }
-          %a{ "ui-sref" => "edit<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>._id})", :class => "btn btn-default"}= { "translate" => "<%= class_name.underscore %>.edit" }
+          %a{ "ui-sref" => "view<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>.id})", :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.view_button" }
+          %a{ "ui-sref" => "edit<%= class_name.camelize(:upper) %>({id:<%= class_name.underscore %>.id})", :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.edit_button" }

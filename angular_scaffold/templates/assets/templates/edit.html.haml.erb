@@ -1,8 +1,8 @@
-%div{"ng-controller" => "<%= class_name.camelize(:upper) %>ListCtrl"} 
+%div{"ng-controller" => "<%= class_name.camelize(:upper) %>EditCtrl"} 
   %h4{ "translate" => "<%= class_name.underscore %>.edition_page" } 
 
   %form{ "ng-submit" => "update<%= class_name.camelize(:upper) %>()", :name => "<%= class_name %>Form" }
     = render_haml("<%= class_name.tableize %>/_form.html.haml")
     .form-group 
-      %a{ :class => "btn btn-danger", "ng-click" => "delete<%= class_name.camelize(:upper) %>(<%= class_name.underscore %>)",  "translate" => "<%= class_name.underscore %>.delete" } 
-      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.create" }
+      %a{ :class => "btn btn-danger", "ng-click" => "delete<%= class_name.camelize(:upper) %>(<%= class_name.underscore %>)", "translate" => "<%= class_name.underscore %>.delete_button" } 
+      %button{ :class => "btn btn-default", "translate" => "<%= class_name.underscore %>.update_button" }

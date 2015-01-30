@@ -7,7 +7,7 @@ module API
       helpers do
         # Never trust parameters from the scary internet, only allow the white list through.
         def <%= class_name.underscore %>_params
-          params.require(:<%= class_name.underscore %>).permit(<%= @attributes.map { |a| ":#{a.name}" }.join(", ") %>)
+          declared(params, include_missing: false)
         end
       end
 
@@ -31,7 +31,12 @@ module API
         desc "Create a <%= class_name.underscore %>."
         params do # Select required fields
         <%- for attribute in @attributes -%>
-          # requires :<%= attribute.name %>, type: <%= attribute.type.camelize(:upper) %>, desc: "Your required <%= attribute.name %>."
+          <%- if attribute.type == "text" || attribute.type == "string" %>
+          optional :<%= attribute.name %>, type: String, desc: "Your required <%= attribute.name %>."
+          <%- end -%>
+          <%- if attribute.type == "integer" || attribute.type == "decimal" %>
+          optional :<%= attribute.name %>, type: Float, desc: "Your required <%= attribute.name %>."
+          <%- end -%>
         <%- end -%>
         end
         post do
@@ -44,12 +49,18 @@ module API
         params do
           requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
         <%- for attribute in @attributes -%>
-          # requires :<%= attribute.name %>, type: <%= attribute.type.camelize(:upper) %>, desc: "Your required <%= attribute.name %>."
+          <%- if attribute.type == "text" || attribute.type == "string" %>
+          optional :<%= attribute.name %>, type: String, desc: "Your required <%= attribute.name %>."
+          <%- end -%>
+          <%- if attribute.type == "integer" || attribute.type == "decimal" %>
+          optional :<%= attribute.name %>, type: Float, desc: "Your required <%= attribute.name %>."
+          <%- end -%>
         <%- end -%>
         end
         put ':id' do
           admin!
-          current_user.<%= class_name.tableize%>.find(params[:id]).
+          <%= class_name.camelize(:upper) %>.
+            find(params[:id]).
             update(<%= class_name.underscore %>_params)
         end
 
@@ -59,7 +70,9 @@ module API
         end
         delete ':id' do
           admin!
-          current_user.<%= class_name.tableize%>.find(params[:id]).destroy
+          <%= class_name.camelize(:upper) %>.
+            find(params[:id]).
+            destroy
         end
 
       end

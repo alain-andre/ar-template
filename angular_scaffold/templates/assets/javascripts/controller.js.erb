@@ -1,14 +1,6 @@
 angular.module('<%= @AppName %>')
-  .controller('<%= class_name.camelize(:upper) %>ListCtrl', function($scope, $state, $window, <%= class_name.camelize(:upper) %>) {
+  .controller('<%= class_name.camelize(:upper) %>ListCtrl', function($scope, $state, <%= class_name.camelize(:upper) %>) {
   $scope.<%= class_name.underscore %>s = <%= class_name.camelize(:upper) %>.query(); //fetch all <%= class_name.underscore %>s. Issues a GET to /api/<%= class_name.underscore %>s
- 
-  $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>s/:id
-    if ($window.confirm('Really delete this?')) {
-      <%= class_name.underscore %>.$delete(function() {
-        $window.location.href = ''; //redirect to home
-      });
-    }
-  };
 })
 .controller('<%= class_name.camelize(:upper) %>ViewCtrl', function($scope, $stateParams, <%= class_name.camelize(:upper) %>) {
   $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id }); //Get a single <%= class_name.underscore %>.Issues a GET to /api/<%= class_name.underscore %>s/:id
@@ -18,17 +10,25 @@ angular.module('<%= @AppName %>')
  
   $scope.add<%= class_name.camelize(:upper) %> = function() { //create a new <%= class_name.underscore %>. Issues a POST to /api/<%= class_name.underscore %>s
     $scope.<%= class_name.underscore %>.$save(function() {
-      $state.go('<%= class_name.underscore %>s'); // on success go back to home i.e. <%= class_name.underscore %>s state.
+      $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
     });
   };
 })
-.controller('<%= class_name.camelize(:upper) %>EditCtrl', function($scope, $state, $stateParams, <%= class_name.camelize(:upper) %>) {
+.controller('<%= class_name.camelize(:upper) %>EditCtrl', function($scope, $state, $stateParams, $window, <%= class_name.camelize(:upper) %>) {
   $scope.update<%= class_name.camelize(:upper) %> = function() { //Update the edited <%= class_name.underscore %>. Issues a PUT to /api/<%= class_name.underscore %>s/:id
     $scope.<%= class_name.underscore %>.$update(function() {
-      $state.go('<%= class_name.underscore %>s'); // on success go back to home i.e. <%= class_name.underscore %>s state.
+      $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
     });
   };
- 
+  
+  $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>s/:id
+    if ($window.confirm('Really delete this?')) {
+      <%= class_name.underscore %>.$delete(function() {
+        $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
+      });
+    }
+  };
+  
   $scope.load<%= class_name.camelize(:upper) %> = function() { //Issues a GET request to /api/<%= class_name.underscore %>s/:id to get a <%= class_name.underscore %> to update
     $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id });
   };
