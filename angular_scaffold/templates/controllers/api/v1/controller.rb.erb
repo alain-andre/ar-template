@@ -47,7 +47,7 @@ module API
 
         desc "Update a <%= class_name.underscore %>."
         params do
-          requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
+          requires :id, type: Integer, desc: "<%= class_name.camelize(:upper) %> ID."
         <%- for attribute in @attributes -%>
           <%- if attribute.type == "text" || attribute.type == "string" %>
           optional :<%= attribute.name %>, type: String, desc: "Your required <%= attribute.name %>."
@@ -57,22 +57,18 @@ module API
           <%- end -%>
         <%- end -%>
         end
-        put ':id' do
+        put do
           admin!
-          <%= class_name.camelize(:upper) %>.
-            find(params[:id]).
-            update(<%= class_name.underscore %>_params)
+          <%= class_name.camelize(:upper) %>.find(params[:id]).update(<%= class_name.underscore %>_params)
         end
 
         desc "Delete a <%= class_name.underscore %>."
         params do
-          requires :id, type: String, desc: "<%= class_name.camelize(:upper) %> ID."
+          requires :id, type: Integer, desc: "<%= class_name.camelize(:upper) %> ID."
         end
-        delete ':id' do
+        delete do
           admin!
-          <%= class_name.camelize(:upper) %>.
-            find(params[:id]).
-            destroy
+          <%= class_name.camelize(:upper) %>.find(params[:id]).destroy
         end
 
       end
