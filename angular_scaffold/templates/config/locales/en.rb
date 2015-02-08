@@ -18,3 +18,9 @@ en:
     string: String
     update_button: Update
     view_button: View
+    required: Required
+    date_not_valid: Date not valid
+    must_be_more_than_0: Must be more than 0
+    wrong_datetime_format: Wrong datetime format
+    time_not_valid: Time not valid
+    number_not_valide: Number not valid

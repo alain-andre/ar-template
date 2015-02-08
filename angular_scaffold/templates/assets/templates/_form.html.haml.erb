@@ -4,19 +4,45 @@
 <%- if attribute.type == "string" %>
   %label{ "translate" => "<%= class_name.underscore %>.string" } 
   %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>", "ng-minlength" => "3", "ng-maxlength" => "20", "required" => "required"}
-  %span{ "ng-show" => "<%= class_name %>Form.name.$error.minlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_at_least" }
-  %span{ "ng-show" => "<%= class_name %>Form.name.$error.maxlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_maximum" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.minlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_at_least" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.maxlength", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_caracters_maximum" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.required", :class => "help-block", "translate" => "<%= class_name.underscore %>.required" }
 <%- end %>
+
 <%- if attribute.type == "text" %>
   %label{ "translate" => "<%= class_name.underscore %>.textarea" } 
   %textarea{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
 <%- end %>
-<%- if attribute.type == "integer" %>
-  %label{ "translate" => "<%= class_name.underscore %>.integer" } 
-  %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+
+<%- if attribute.type == "integer" || attribute.type == "float" || attribute.type == "decimal" %>
+  %label{ "translate" => "<%= class_name.underscore %>.<%= attribute.type %>" } 
+  %input{ :type => "number", :min => "0", :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.min", :class => "help-block", "translate" => "<%= class_name.underscore %>.must_be_more_than_0" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.number", :class => "help-block", "translate" => "<%= class_name.underscore %>.number_not_valide" }
 <%- end %>
-<%- if attribute.type == "decimal" %>
-  %label{ "translate" => "<%= class_name.underscore %>.decimal" } 
-  %input{ :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+
+<%- if attribute.type == "datetime" %>
+  %label{ "translate" => "<%= class_name.underscore %>.<%= attribute.type %>" } 
+  %input{ :type => "datetime-local", :placeholder => "yyyy-MM-ddTHH:mm:ss", :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.datetimelocal", :class => "help-block", "translate" => "<%= class_name.underscore %>.wrong_datetime_format" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.date", :class => "help-block", "translate" => "<%= class_name.underscore %>.date_not_valid" }
 <%- end %>
+
+<%- if attribute.type == "date" %>
+  %label{ "translate" => "<%= class_name.underscore %>.<%= attribute.type %>" } 
+  %input{ :type => "date", :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.date", :class => "help-block", "translate" => "<%= class_name.underscore %>.date_not_valid" }
+<%- end %>
+
+<%- if attribute.type == "timestamp" || attribute.type == "time" %>
+  %label{ "translate" => "<%= class_name.underscore %>.<%= attribute.type %>" } 
+  %input{ :type => "time", :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+  %span{ "ng-show" => "<%= class_name %>Form.<%= attribute.name %>.$error.time", :class => "help-block", "translate" => "<%= class_name.underscore %>.time_not_valid" }
+<%- end %>
+
+<%- if attribute.type == "boolean" %>
+  %label{ "translate" => "<%= class_name.underscore %>.<%= attribute.type %>" } 
+  %input{ :type => "checkbox", :name => "<%= attribute.name %>", :class => "form-control", "ng-model" => "<%= class_name.underscore %>.<%= attribute.name %>" }
+<%- end %>
+
 <%- end %>

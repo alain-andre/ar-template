@@ -31,11 +31,10 @@ module API
         desc "Create a <%= class_name.underscore %>."
         params do # Select required fields
         <%- for attribute in @attributes -%>
-          <%- if attribute.type == "text" || attribute.type == "string" %>
-          optional :<%= attribute.name %>, type: String, desc: "Your required <%= attribute.name %>."
-          <%- end -%>
-          <%- if attribute.type == "integer" || attribute.type == "decimal" %>
-          optional :<%= attribute.name %>, type: Float, desc: "Your required <%= attribute.name %>."
+          <%- if attribute.type == "integer" || attribute.type == "decimal" || attribute.type == "float" %>
+          optional :<%= attribute.name %>, type: Float, desc: "Your optional <%= attribute.name %>."
+          <%- else -%>
+          optional :<%= attribute.name %>, type: String, desc: "Your optional <%= attribute.name %>."
           <%- end -%>
         <%- end -%>
         end
@@ -49,11 +48,10 @@ module API
         params do
           requires :id, type: Integer, desc: "<%= class_name.camelize(:upper) %> ID."
         <%- for attribute in @attributes -%>
-          <%- if attribute.type == "text" || attribute.type == "string" %>
-          optional :<%= attribute.name %>, type: String, desc: "Your required <%= attribute.name %>."
-          <%- end -%>
-          <%- if attribute.type == "integer" || attribute.type == "decimal" %>
-          optional :<%= attribute.name %>, type: Float, desc: "Your required <%= attribute.name %>."
+          <%- if attribute.type == "integer" || attribute.type == "decimal" || attribute.type == "float" %>
+          optional :<%= attribute.name %>, type: Float, desc: "Your optional <%= attribute.name %>."
+          <%- else -%>
+          optional :<%= attribute.name %>, type: String, desc: "Your optional <%= attribute.name %>."
           <%- end -%>
         <%- end -%>
         end
