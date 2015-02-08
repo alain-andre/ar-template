@@ -23,7 +23,7 @@ angular.module('<%= @AppName %>')
   
   $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>s/:id
     if ($window.confirm('Really delete this?')) {
-      <%= class_name.underscore %>.$delete(function() {
+      <%= class_name.underscore %>.$delete({'id': <%= class_name.underscore %>.id}, function() {
         $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
       });
     }
