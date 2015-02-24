@@ -40,8 +40,7 @@ module API
         end
         post do
           admin!
-          <%= class_name.camelize(:upper) %>.
-            create!(<%= class_name.underscore %>_params)
+          <%= class_name.camelize(:upper) %>.create!(<%= class_name.underscore %>_params)
         end
 
         desc "Update a <%= class_name.underscore %>."
