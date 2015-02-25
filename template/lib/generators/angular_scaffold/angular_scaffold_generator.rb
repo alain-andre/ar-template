@@ -36,9 +36,9 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
   # Creates ruby controller for the view api and admin actions
   def template_ruby_controller
     template "controllers/api/v1/controller.rb.erb", "app/controllers/api/v1/#{class_name.tableize}.rb"
-    file = "app/controllers/api/v1/base.rb"
-    if FileTest.exists?(file) then
-      inject_into_file file, :after => /Grape::API/ do
+    tmp_file = "app/controllers/api/v1/base.rb"
+    if FileTest.exists?(tmp_file) then
+      inject_into_file tmp_file, :after => /Grape::API/ do
         "\n      mount API::V1::#{class_name.camelize.pluralize}"
       end
     end
@@ -57,11 +57,11 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
   private
     # Add the new AngularJS routes in app/assets/javascripts/routes.js.coffee
     def update_application()
-      file = "app/assets/javascripts/routes.js.coffee"
-      if FileTest.exists?(file) then
-        if File.readlines(file).grep(/stateProvider/).size > 0
-          if File.readlines(file).grep(/#{class_name.tableize}/).size <= 0
-            open(file, 'a') { |f|
+      tmp_file = "app/assets/javascripts/routes.js.coffee"
+      if FileTest.exists?(tmp_file) then
+        if File.readlines(tmp_file).grep(/stateProvider/).size > 0
+          if File.readlines(tmp_file).grep(/#{class_name.tableize}/).size <= 0
+            open(tmp_file, 'a') { |f|
               f.puts "\n
   # #{class_name.tableize}
   $stateProvider.state('#{class_name.tableize}', { 
@@ -95,13 +95,13 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
     })"
               }
           else
-            say "Warning, #{class_name.tableize} already set in routes #{file}"
+            say "Warning, #{class_name.tableize} already set in routes #{tmp_file}"
           end
         else
-          say "Warning, $stateProvider not found in routes #{file}"
+          say "Warning, $stateProvider not found in routes #{tmp_file}"
         end
       else
-        say "Error, cannot find file #{file}"
+        say "Error, cannot find file #{tmp_file}"
       end
     end
 

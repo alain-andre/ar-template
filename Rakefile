@@ -1,6 +1,13 @@
-# Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+require "rubygems"
+require "bundler/setup"
+require "stringex"
 
-require File.expand_path('../config/application', __FILE__)
-
-TestApp::Application.load_tasks
+desc "Create a new project called test_app"
+task :new do
+  `cd ..`
+  `rm -Rf test_app`
+  `rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle --force`
+  `cd test_app`
+  `rails g auth_browserid`
+  `rails generate angular_scaffold compte nom:string description:text prix:decimal rdv:date validation:boolean heure:time creation:datetime`
+end
