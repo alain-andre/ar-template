@@ -2,7 +2,9 @@
 [![Code Climate](https://codeclimate.com/github/alain-andre/ar-template/badges/gpa.svg)](https://codeclimate.com/github/alain-andre/ar-template)
 [![Test Coverage](https://codeclimate.com/github/alain-andre/ar-template/badges/coverage.svg)](https://codeclimate.com/github/alain-andre/ar-template)
 
-The project template configures Rails with AngularJS based on [monterail](http://monterail.com/) ideas and a mix of [mines](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/). Once created, the project can generate **angular_scaffold** wich include **migration**, **api**, **controller**, **model** and **CRUD templates**.
+This template creates a Rails project working with a server API and a AngularJS application. It comes with a generator that scaffold all the primary files to work (see [Example](#Example)).
+
+It is based on [monterail](http://monterail.com/) ideas and a mix of [mines](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/). Once created, the project can generate **angular_scaffold** wich include **migration**, **api**, **controller**, **model** and **CRUD templates**.
 
 CRUD is allowed to only admin users. A **role** is added to [Devise](https://github.com/plataformatec/devise) user and set by default to 0 (lambda) on creation. The `javascripts/routes` will then use the [Rails JS environment](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/) to allow or not access to admin templates.
 
@@ -16,11 +18,11 @@ Then it's possible to insert a browserid authentication :
 And generate an angularjs scaffold of a *Thing* with this composition. Define it like you should for a model.
 
 `rails generate angular_scaffold thing name:string description:text price:decimal` 
+
 ## Option
 You can use `--skip-devise` option if you don't need Users.
 
 `rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle --skip-devise`
-
 
 # Benefits
   * Use erb and haml in JS files (assets)
