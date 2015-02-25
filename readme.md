@@ -6,16 +6,21 @@ The project template configures Rails with AngularJS based on [monterail](http:/
 
 CRUD is allowed to only admin users. A **role** is added to [Devise](https://github.com/plataformatec/devise) user and set by default to 0 (lambda) on creation. The `javascripts/routes` will then use the [Rails JS environment](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/) to allow or not access to admin templates.
 
-# Example :
+# Example
 `rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle`
 
-Then comes the possibility to insert a browserid authentication :
+Then it's possible to insert a browserid authentication :
 
 `rails g auth_browserid`
 
-And the possibility of generating angularjs scaffold of a Thing with ts composition
+And generate an angularjs scaffold of a *Thing* with this composition. Define it like you should for a model.
 
 `rails generate angular_scaffold thing name:string description:text price:decimal` 
+## Option
+You can use `--skip-devise` option if you don't need Users.
+
+`rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle --skip-devise`
+
 
 # Benefits
   * Use erb and haml in JS files (assets)
@@ -26,6 +31,9 @@ And the possibility of generating angularjs scaffold of a Thing with ts composit
 # Generators
   * [angular_scaffold](https://github.com/alain-andre/ar-template/tree/master/angular_scaffold)
   * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/auth_browserid)
+
+# Testing
+This template is using [rspec](https://github.com/rspec/rspec-rails). Run `bundle exec rspec` to test.
 
 # Todo
   * Make the angular_scaffold generator allow offline actions (atm only ping api)
