@@ -1,7 +1,7 @@
 # vars
 @appName = @app_name.camelize(:lower)
 @AppName = @app_name.camelize(:upper)
-filesDir = File.expand_path(File.dirname(__FILE__))+"/defaults"
+filesDir = File.expand_path(File.dirname(__FILE__))+"/template"
 
 # gem
 FileUtils.cp("#{filesDir}/Gemfile", "Gemfile")
@@ -95,26 +95,40 @@ git commit: '-m "Templating de app/assets/templates/"'
 template "#{filesDir}/app/helpers/haml_helper.rb", "app/helpers/haml_helper.rb"
 git add: "-A"
 git commit: '-m "Templating de app/helpers/"'
-run "bundle install"
-# Users
-run "rails generate devise:install"
-inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
-  "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"
-end
-run "rails generate devise User"
-template "#{filesDir}/db/migrate/add_role_to_users.rb", "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
-inject_into_file 'app/models/user.rb', :after => "Base" do
-  "\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n  "
-end
-rake 'db:migrate'
-open('db/seeds.rb', 'a') { |f| f.puts "\nUser.last.update(:role => 1)" }
-git add: "-A"
-git commit: '-m "Generation du User"'
 
-directory File.expand_path(File.dirname(__FILE__))+"/auth_browserid", "lib/generators/auth_browserid"
-git add: "-A"
-git commit: '-m "Initialisation du generateur authentification par browserid"'
+if ARGV.include?('--skip-devise') then
+  puts "Skipping devise installation and configuration !!"
+else
+  run "bundle install"
+  # Users
+  run "rails generate devise:install"
+  inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
+    "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"
+  end
+  run "rails generate devise User"
+  template "#{filesDir}/db/migrate/add_role_to_users.rb", "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
+  inject_into_file 'app/models/user.rb', :after => "Base" do
+    "\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n  "
+  end
+  rake 'db:migrate'
+  open('db/seeds.rb', 'a') { |f| f.puts "\nUser.last.update(:role => 1)" }
+  git add: "-A"
+  git commit: '-m "Generation du User"'
+end
 
-directory File.expand_path(File.dirname(__FILE__))+"/angular_scaffold", "lib/generators/angular_scaffold"
+# RSPEC
+run "rails generate rspec:install"
+puts ".rspec added, remove --warning if you whant to skip messages"
 git add: "-A"
-git commit: '-m "Initialisation du generateur de scaffold AngularJS"'
+git commit: '-m "rspec installed remove --warning if you whant to skip messages"'
+
+# GENERATORS
+directory "#{filesDir}/lib/generators/auth_browserid", "lib/generators/auth_browserid"
+directory "#{filesDir}/spec/generators/auth_browserid_spec.rb", "spec/generators/auth_browserid_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur authentification par browserid"'
+
+directory "#{filesDir}/lib/generators/angular_scaffold", "lib/generators/angular_scaffold"
+directory "#{filesDir}/spec/generators/angular_scaffold_spec.rb", "spec/generators/angular_scaffold_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur de scaffold AngularJS"'
