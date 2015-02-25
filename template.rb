@@ -96,10 +96,22 @@ template "#{filesDir}/app/helpers/haml_helper.rb", "app/helpers/haml_helper.rb"
 git add: "-A"
 git commit: '-m "Templating de app/helpers/"'
 
+# GENERATORS
+directory "#{filesDir}/lib/generators/auth_browserid", "lib/generators/auth_browserid"
+template "#{filesDir}/spec/generators/auth_browserid_generator_spec.rb", "spec/generators/auth_browserid_generator_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur authentification par browserid"'
+
+directory "#{filesDir}/lib/generators/angular_scaffold", "lib/generators/angular_scaffold"
+template "#{filesDir}/spec/generators/angular_scaffold_generator_spec.rb", "spec/generators/angular_scaffold_generator_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur de scaffold AngularJS"'
+
+puts "bundle install"
+
 if ARGV.include?('--skip-devise') then
   puts "Skipping devise installation and configuration !!"
 else
-  run "bundle install"
   # Users
   run "rails generate devise:install"
   inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
@@ -120,15 +132,4 @@ end
 run "rails generate rspec:install"
 puts ".rspec added, remove --warning if you whant to skip messages"
 git add: "-A"
-git commit: '-m "rspec installed remove --warning if you whant to skip messages"'
-
-# GENERATORS
-directory "#{filesDir}/lib/generators/auth_browserid", "lib/generators/auth_browserid"
-directory "#{filesDir}/spec/generators/auth_browserid_spec.rb", "spec/generators/auth_browserid_spec.rb"
-git add: "-A"
-git commit: '-m "Copie du generateur authentification par browserid"'
-
-directory "#{filesDir}/lib/generators/angular_scaffold", "lib/generators/angular_scaffold"
-directory "#{filesDir}/spec/generators/angular_scaffold_spec.rb", "spec/generators/angular_scaffold_spec.rb"
-git add: "-A"
-git commit: '-m "Copie du generateur de scaffold AngularJS"'
+git commit: '-m "rspec installed; remove --warning if you whant to skip messages"'
