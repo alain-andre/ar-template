@@ -57,7 +57,7 @@ Generate an angularjs scaffold of a *Thing* with its composition (Define it like
   * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/auth_browserid)
 
 # Testing
-This template is using [ammeter](https://github.com/alexrothenberg/ammeter) to rspec the generators. Run `bundle exec rspec` to test them.
+This template is using [ammeter](https://github.com/alexrothenberg/ammeter) to rspec the generators. Run `bundle exec rspec` inside the created project to test them.
 
 
 # License
