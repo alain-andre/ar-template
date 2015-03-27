@@ -28,8 +28,8 @@ You will have the following options :
   * Use generators
 
 # Generators
-  * [angular_scaffold](https://github.com/alain-andre/ar-template/tree/master/angular_scaffold)
-  * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/auth_browserid)
+  * [angular_scaffold](https://github.com/alain-andre/ar-template/tree/master/template/lib/generators/angular_scaffold)
+  * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/template/lib/generators/auth_browserid)
 
 # Testing
 This template is using [rspec](https://github.com/rspec/rspec-rails). Run `bundle exec rspec` to test.
