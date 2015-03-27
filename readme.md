@@ -9,20 +9,17 @@ It is based on [monterail](http://monterail.com/) ideas and a mix of [mines](htt
 CRUD is allowed to only admin users. A **role** is added to [Devise](https://github.com/plataformatec/devise) user and set by default to 0 (lambda) on creation. The `javascripts/routes` will then use the [Rails JS environment](http://www.alain-andre.fr/blog/2015/01/23/configurer-rails-avec-angularjs/) to allow or not access to admin templates.
 
 # Example
-`rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle`
+Use the rakefile to generate a new project :
+`bundle exec rake new_app['new_project']`
 
-Then it's possible to insert a browserid authentication :
-
-`rails g auth_browserid`
-
-And generate an angularjs scaffold of a *Thing* with this composition. Define it like you should for a model.
-
-`rails generate angular_scaffold thing name:string description:text price:decimal` 
-
-## Option
-You can use `--skip-devise` option if you don't need Users.
-
-`rails _4.0.0_ new test_app -m ar-template/template.rb --skip-bundle --skip-devise`
+You will have the following options :
+ * Generate rspec installation?
+ * Add devise gem amd configure it?
+  * Add role to the user model?
+  * Add browserid authentication?
+ * Generate angular scaffolding?
+  * What is the Object name to scaffold?
+  * What's the structure of the object? (describe it like a model generation)
 
 # Benefits
   * Use erb and haml in JS files (assets)

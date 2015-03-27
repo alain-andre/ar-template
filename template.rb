@@ -106,30 +106,3 @@ directory "#{filesDir}/lib/generators/angular_scaffold", "lib/generators/angular
 template "#{filesDir}/spec/generators/angular_scaffold_generator_spec.rb", "spec/generators/angular_scaffold_generator_spec.rb"
 git add: "-A"
 git commit: '-m "Copie du generateur de scaffold AngularJS"'
-
-puts "bundle install"
-
-if ARGV.include?('--skip-devise') then
-  puts "Skipping devise installation and configuration !!"
-else
-  # Users
-  run "rails generate devise:install"
-  inject_into_file 'config/environments/development.rb', :after => "config.action_mailer.raise_delivery_errors = false" do
-    "\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }"
-  end
-  run "rails generate devise User"
-  template "#{filesDir}/db/migrate/add_role_to_users.rb", "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
-  inject_into_file 'app/models/user.rb', :after => "Base" do
-    "\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n  "
-  end
-  rake 'db:migrate'
-  open('db/seeds.rb', 'a') { |f| f.puts "\nUser.last.update(:role => 1)" }
-  git add: "-A"
-  git commit: '-m "Generation du User"'
-end
-
-# RSPEC
-run "rails generate rspec:install"
-puts ".rspec added, remove --warning if you whant to skip messages"
-git add: "-A"
-git commit: '-m "rspec installed; remove --warning if you whant to skip messages"'
