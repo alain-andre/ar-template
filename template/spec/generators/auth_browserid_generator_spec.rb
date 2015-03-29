@@ -7,7 +7,6 @@ require 'generators/auth_browserid/auth_browserid_generator'
 
 describe AuthBrowseridGenerator, :type => :generator do
   # Tell the generator where to put its output (what it thinks of as Rails.root)
-  destination File.expand_path("../../../../../tmp", __FILE__)
   dir = File.expand_path('../../../../../tmp', __FILE__)
   destination dir
   before do
