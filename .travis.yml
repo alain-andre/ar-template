@@ -2,4 +2,4 @@ language: ruby
 rvm:
   - 2.1.2
   - 2.0.0
-script: rails _4.0.0_ new travis_test -m ar-template/template.rb
+script: cd ..; rails _4.0.0_ new travis_test -m ar-template/template.rb
