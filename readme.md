@@ -32,7 +32,7 @@ You will have the following options :
   * [auth_browserid](https://github.com/alain-andre/ar-template/tree/master/template/lib/generators/auth_browserid)
 
 # Testing
-This template is using [rspec](https://github.com/rspec/rspec-rails). Run `bundle exec rspec` to test.
+This template is using [rspec](https://github.com/rspec/rspec-rails). Run `bundle exec rspec` inside your new generated project to test your generators.
 
 # Todo
   * Make the angular_scaffold generator allow offline actions (atm only ping api)
