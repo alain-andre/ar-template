@@ -15,37 +15,20 @@ describe AngularScaffoldGenerator, :type => :generator do
   end
 
   # Verifies the file's contents the given structure in HTML files
-  def test_html_structure
-    it { is_expected.to contain(/compte.nom/) }
-    it { is_expected.to contain(/compte.description/) }
-    it { is_expected.to contain(/compte.prix/) }
-    it { is_expected.to contain(/compte.rdv/) }
-    it { is_expected.to contain(/compte.validation/) }
-    it { is_expected.to contain(/compte.heure/) }
-    it { is_expected.to contain(/compte.creation/) }
-  end
+  let (:test_html_structure){ %w(compte.nom, compte.description, compte.prix, compte.rdv, compte.validation, compte.heure, compte.creation) }
 
   # Verifies the file's contents the given structure in ruby files
-  def test_rb_structure
-    it { is_expected.to contain(/:nom/) }
-    it { is_expected.to contain(/:description/) }
-    it { is_expected.to contain(/:prix/) }
-    it { is_expected.to contain(/:rdv/) }
-    it { is_expected.to contain(/:validation/) }
-    it { is_expected.to contain(/:heure/) }
-    it { is_expected.to contain(/:creation/) }
-  end
+  let (:test_rb_structure) { %w(nom, description, prix, rdv, validation, heure, creation) }
 
   # custom matchers make it easy to verify what the generator creates
   describe 'The generated files' do
 
-    before do 
+    before do
       # Creates files modified in generator but created by template
       FileUtils.mkdir_p("#{dir}/app/controllers/api/v1/")
       File.open("#{dir}/app/controllers/api/v1/base.rb", 'w'){|file| file.write("Grape::API")}
       FileUtils.mkdir_p("#{dir}/app/assets/javascripts/")
       File.open("#{dir}/app/assets/javascripts/routes.js.coffee", 'w'){|file| file.write("stateProvider")}
-      # run generator
       run_generator %w(compte nom:string description:text prix:decimal rdv:date validation:boolean heure:time creation:datetime)
     end
 
@@ -71,38 +54,65 @@ describe AngularScaffoldGenerator, :type => :generator do
     describe 'in app/assets/templates/comptes/index.html.haml' do
       subject { file('app/assets/templates/comptes/index.html.haml') }
       it { is_expected.to exist }
-      test_html_structure
+      
+      it 'respects the objects structure' do
+        test_html_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
+
     describe 'in app/assets/templates/comptes/_filter.html.haml' do
       subject { file('app/assets/templates/comptes/_filter.html.haml') }
       it { is_expected.to exist }
     end
+
     describe 'in app/assets/templates/comptes/admin.html.haml' do
       subject { file('app/assets/templates/comptes/admin.html.haml') }
       it { is_expected.to exist }
-      test_html_structure
+      
+      it 'respects the objects structure' do
+        test_html_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
+
     describe 'in app/assets/templates/comptes/edit.html.haml' do
       subject { file('app/assets/templates/comptes/edit.html.haml') }
       it { is_expected.to exist }
     end
+
     describe 'in app/assets/templates/comptes/show.html.haml' do
       subject { file('app/assets/templates/comptes/show.html.haml') }
       it { is_expected.to exist }
-      test_html_structure
+      
+      it 'respects the objects structure' do
+        test_html_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
+
     describe 'in app/assets/templates/comptes/new.html.haml' do
       subject { file('app/assets/templates/comptes/new.html.haml') }
       it { is_expected.to exist }
     end
+
     describe 'in app/assets/templates/comptes/_form.html.haml' do
       subject { file('app/assets/templates/comptes/_form.html.haml') }
       it { is_expected.to exist }
-      test_html_structure
+      
+      it 'respects the objects structure' do
+        test_html_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
 
     describe 'in app/controllers/api/v1/comptes.rb' do
       subject { file('app/controllers/api/v1/comptes.rb') }
+
       it { is_expected.to exist }
       # Test API functions exists
       it { is_expected.to contain(/Compte.all/) }
@@ -110,8 +120,12 @@ describe AngularScaffoldGenerator, :type => :generator do
       it { is_expected.to contain(/Compte.create!\(compte_params\)/) }
       it { is_expected.to contain(/Compte.find\(params\[:id\]\).update\(compte_params\)/) }
       it { is_expected.to contain(/Compte.find\(params\[:id\]\).destroy/) }
-      # Test structure is respected
-      test_rb_structure
+
+      it 'respects the objects structure' do
+        test_rb_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
 
     describe 'in app/models/compte.rb' do 
@@ -126,27 +140,15 @@ describe AngularScaffoldGenerator, :type => :generator do
 
     describe 'the migration' do
       subject { migration_file('db/migrate/create_comptes.rb') }
-      # is_expected_to be_a_migration - verifies the file exists with a migration timestamp as part of the filename
       it { is_expected.to exist }
+      it { is_expected.to be_a_migration } # verifies the file exists with a migration timestamp as part of the filename
       it { is_expected.to contain /create_table/ }
-      test_rb_structure
-    end
 
-    describe 'in app/assets/javascripts/routes.js.coffee' do
-      subject { file('app/assets/javascripts/routes.js.coffee') }
-      it { is_expected.to exist }
-      it { is_expected.to contain(/stateProvider/) }
-      it { is_expected.to contain(/\/comptes/) }
-      it { is_expected.to contain(/\/comptes\/:id\/view/) }
-      it { is_expected.to contain(/\/admin\/comptes/) }
-      it { is_expected.to contain(/\/admin\/comptes\/new/) }
-      it { is_expected.to contain(/\/admin\/comptes\/:id\/edit/) }
-    end
-
-    describe 'in app/controllers/api/v1/base.rb' do
-      subject { file('app/controllers/api/v1/base.rb') }
-      it { is_expected.to exist }
-      it { is_expected.to contain(/mount API::V1::Comptes/) }
+      it 'respects the objects structure' do
+        test_rb_structure.each do |structure|
+          expect(subject).to contain(structure)
+        end
+      end
     end
 
   end
