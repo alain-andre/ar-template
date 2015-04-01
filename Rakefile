@@ -1,7 +1,5 @@
 require "rubygems"
 require "bundler/setup"
-require "thor/actions/inject_into_file"
-
 
 package_dir = File.expand_path(File.dirname(__FILE__))
 
@@ -114,4 +112,3 @@ def ask(message, valid_options)
   end
   answer
 end
-
