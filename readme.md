@@ -18,6 +18,9 @@ def is_admin?
 end 
 ```
 
+## Required
+This generator will need the [pg library](https://github.com/alain-andre/ar-template/issues/19). Be sure to have it installed before templating your new project.
+
 # Example
 Use the rakefile to generate a new project :
 `bundle exec rake new_app['new_project']`
