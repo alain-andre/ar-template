@@ -1,7 +1,5 @@
-require 'rake'
-require 'rails_helper'
 require 'ammeter/init'
-require 'rails/all'
+require 'rails/generators'
 
 # Generators are not automatically loaded by Rails
 require 'generators/angular_scaffold/angular_scaffold_generator'
@@ -15,10 +13,10 @@ describe AngularScaffoldGenerator, :type => :generator do
   end
 
   # Verifies the file's contents the given structure in HTML files
-  let (:test_html_structure){ %w(compte.nom, compte.description, compte.prix, compte.rdv, compte.validation, compte.heure, compte.creation) }
+  let (:test_html_structure){ %w(compte.nom compte.description compte.prix compte.rdv compte.validation compte.heure compte.creation) }
 
   # Verifies the file's contents the given structure in ruby files
-  let (:test_rb_structure) { %w(nom, description, prix, rdv, validation, heure, creation) }
+  let (:test_rb_structure) { %w(nom description prix rdv validation heure creation) }
 
   # custom matchers make it easy to verify what the generator creates
   describe 'The generated files' do
@@ -141,7 +139,8 @@ describe AngularScaffoldGenerator, :type => :generator do
     describe 'the migration' do
       subject { migration_file('db/migrate/create_comptes.rb') }
       it { is_expected.to exist }
-      it { is_expected.to be_a_migration } # verifies the file exists with a migration timestamp as part of the filename
+      # verifies the file exists with a migration timestamp as part of the filename
+      it { is_expected.to be_a_migration } 
       it { is_expected.to contain /create_table/ }
 
       it 'respects the objects structure' do
@@ -149,6 +148,29 @@ describe AngularScaffoldGenerator, :type => :generator do
           expect(subject).to contain(structure)
         end
       end
+    end
+
+    # @todo https://github.com/alain-andre/ar-template/issues/15
+    describe 'in app/assets/javascripts/routes.js.coffee' do
+      subject { file('app/assets/javascripts/routes.js.coffee') }
+      it { is_expected.to exist }
+      it { is_expected.to contain(/stateProvider/) }
+
+      pending "Test if routes.js.coffee contains the good routes"
+      #it { is_expected.to contain(/\/comptes/) }
+      #it { is_expected.to contain(/\/comptes\/:id\/view/) }
+      #it { is_expected.to contain(/\/admin\/comptes/) }
+      #it { is_expected.to contain(/\/admin\/comptes\/new/) }
+      #it { is_expected.to contain(/\/admin\/comptes\/:id\/edit/) }
+    end
+
+    # @todo https://github.com/alain-andre/ar-template/issues/15
+    describe 'in app/controllers/api/v1/base.rb' do
+      subject { file('app/controllers/api/v1/base.rb') }
+      it { is_expected.to exist }
+
+      pending "Test if api/v1/base.rb contains 'mount API::V1::Comptes'"
+      #it { is_expected.to contain(/mount API::V1::Comptes/) }
     end
 
   end
