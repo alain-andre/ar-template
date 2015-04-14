@@ -19,7 +19,21 @@ end
 ```
 
 ## Required
-This generator will need the [pg library](https://github.com/alain-andre/ar-template/issues/19). Be sure to have it installed before templating your new project.
+This generator will need the [pg dev library](https://github.com/alain-andre/ar-template/issues/19) and the sqlite dev library (libsqlite3-dev for debian based). Be sure to have it installed before templating your new project.
+
+## How it works
+First of all, the `templates` function of `lib/templates_paths.rb` list all the files to work with AngularJS. It is then used in the `app/controllers/concerns/js_env.rb` concern that creates an AngularJS module called **share** and is inserted in the `application.html` file of the project.
+
+This way, it is possible to pass a lot of rails informations to the AngularJS application like the liste of templates, the rails environement etc.
+
+### Create a controller
+@todo
+### Create a model
+@todo
+### Create a view
+@todo
+### Scaffolding
+@todo split the code into model, view, controller
 
 # Example
 Use the rakefile to generate a new project :
