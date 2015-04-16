@@ -87,7 +87,7 @@ end
 # Plug a scaffoled angular object into the project using it's generator
 def angular_scaffold
   object = get_stdin("What is the Object name to scaffold? ")
-  puts "Describe your structure like a çodel generation :\nnom:string description:text prix:decimal rdv:date validation:boolean heure:time creation:datetime"
+  puts "Describe your structure like a model generation :\nnom:string description:text prix:decimal rdv:date validation:boolean heure:time creation:datetime"
   parameters = get_stdin("What's the structure of the object? ")
   system "rails generate angular_scaffold #{object} #{parameters}"
 end

@@ -102,6 +102,21 @@ template "#{filesDir}/spec/generators/auth_browserid_generator_spec.rb", "spec/g
 git add: "-A"
 git commit: '-m "Copie du generateur authentification par browserid"'
 
+directory "#{filesDir}/lib/generators/angular_controller", "lib/generators/angular_controller"
+#template "#{filesDir}/spec/generators/angular_controller_generator_spec.rb", "spec/generators/angular_controller_generator_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur de controller AngularJS"'
+
+directory "#{filesDir}/lib/generators/angular_model", "lib/generators/angular_model"
+#template "#{filesDir}/spec/generators/angular_model_generator_spec.rb", "spec/generators/angular_model_generator_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur de model AngularJS"'
+
+directory "#{filesDir}/lib/generators/angular_views", "lib/generators/angular_views"
+#template "#{filesDir}/spec/generators/angular_views_generator_spec.rb", "spec/generators/angular_views_generator_spec.rb"
+git add: "-A"
+git commit: '-m "Copie du generateur de views AngularJS"'
+
 directory "#{filesDir}/lib/generators/angular_scaffold", "lib/generators/angular_scaffold"
 template "#{filesDir}/spec/generators/angular_scaffold_generator_spec.rb", "spec/generators/angular_scaffold_generator_spec.rb"
 git add: "-A"

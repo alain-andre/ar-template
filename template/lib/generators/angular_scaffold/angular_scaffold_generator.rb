@@ -14,17 +14,17 @@ class AngularScaffoldGenerator < Rails::Generators::NamedBase
   
   # Creates the rails and angularjs controller
   def create_controller
-    generate("angular_controller", model_attributes)
+    generate("angular_controller", class_name.tableize, model_attributes.join(" "))
   end
 
   # Creates the rails model
   def create_model
-    generate("angular_model", model_attributes)
+    generate("angular_model", class_name.tableize, model_attributes.join(" "))
   end
 
   # Creates the angularjs views
   def create_views
-    generate("angular_views", model_attributes)
+    generate("angular_views", class_name.tableize, model_attributes.join(" "))
   end
 
 end
