@@ -131,7 +131,7 @@ Generate model, views and controller for the given arguments.
 ```
 
 # Example
-Use the rakefile to generate a new project; if no project name is given, the rakefile will create a project called `new_app`.
+Use the rakefile to generate a new project; if no project name is given, the rakefile will create a project called `test_app`.
 
 **Use:**
 
