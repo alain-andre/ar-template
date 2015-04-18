@@ -15,13 +15,10 @@ class AngularViewsGenerator < Rails::Generators::NamedBase
 
   # Generates the needed templates
   def create_templates
-    template "assets/templates/_filter.html.haml.erb", "app/assets/templates/#{class_name.tableize}/_filter.html.haml"
-    template "assets/templates/index.html.haml.erb", "app/assets/templates/#{class_name.tableize}/index.html.haml"
-    template "assets/templates/admin.html.haml.erb", "app/assets/templates/#{class_name.tableize}/admin.html.haml"
-    template "assets/templates/edit.html.haml.erb", "app/assets/templates/#{class_name.tableize}/edit.html.haml"
-    template "assets/templates/show.html.haml.erb", "app/assets/templates/#{class_name.tableize}/show.html.haml"
-    template "assets/templates/new.html.haml.erb", "app/assets/templates/#{class_name.tableize}/new.html.haml"
-    template "assets/templates/_form.html.haml.erb", "app/assets/templates/#{class_name.tableize}/_form.html.haml"
+    files = %w(_filter _form index admin edit show new)
+    files.each do |file|
+      template "assets/templates/#{file}.html.haml.erb", "app/assets/templates/#{class_name.tableize}/#{file}.html.haml"
+    end
   end
 
   # Generates the I18 file
