@@ -1,6 +1,5 @@
 class AngularScaffoldGenerator < Rails::Generators::NamedBase
   source_root File.expand_path("../templates", __FILE__)
-
   argument :model_attributes, type: :array, default: [], banner: "model:attributes"
   
   # Creates the rails and angularjs controller

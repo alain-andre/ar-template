@@ -97,6 +97,8 @@ git add: "-A"
 git commit: '-m "Templating de app/helpers/"'
 
 # GENERATORS
+directory "#{filesDir}/app/models/concerns", "app/models/concerns"
+
 directory "#{filesDir}/lib/generators/auth_browserid", "lib/generators/auth_browserid"
 template "#{filesDir}/spec/generators/auth_browserid_generator_spec.rb", "spec/generators/auth_browserid_generator_spec.rb"
 git add: "-A"
