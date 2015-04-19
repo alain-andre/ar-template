@@ -1,5 +1,6 @@
 # Objective
 [![Code Climate](https://codeclimate.com/github/alain-andre/ar-template/badges/gpa.svg)](https://codeclimate.com/github/alain-andre/ar-template)
+[![Build Status](https://travis-ci.org/alain-andre/ar-template.svg?branch=master)](https://travis-ci.org/alain-andre/ar-template)
 
 This template creates a Rails project working with a server API and a AngularJS application. It comes with a generator that scaffold all the primary files to work (see [Example](#example)).
 
