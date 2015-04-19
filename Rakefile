@@ -28,6 +28,19 @@ task :new_app, :directory do |t, args|
   end
 end
 
+desc "Travis test"
+task :travis_test
+  directory = "travis_test"
+  cd ".." do
+    system "rails _4.0.0_ new #{directory} -m #{package_dir}/template.rb --skip-bundle --force"
+    cd directory do
+      Bundler.with_clean_env do
+        system "bundle install"
+        generate_rspec
+      end
+    end
+end
+
 # RSPEC
 def generate_rspec
   system "rails generate rspec:install"
