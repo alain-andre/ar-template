@@ -26,7 +26,7 @@ class AngularControllerGenerator <  Rails::Generators::NamedBase
       if File.readlines(tmp_file).grep(/stateProvider/).size > 0 then
         if File.readlines(tmp_file).grep(/#{class_name.tableize}/).size <= 0 then
           open(tmp_file, 'a') { |f|
-            f.puts ERB.new(File.read("#{files_origin}/assets/javascripts/routes.js.coffee.erb")).run
+            f.puts ERB.new(File.read("#{files_origin}/assets/javascripts/routes.js.coffee.erb")).result(binding)
           }
         else
           say "Warning, #{class_name.tableize} already set in routes #{tmp_file}"
