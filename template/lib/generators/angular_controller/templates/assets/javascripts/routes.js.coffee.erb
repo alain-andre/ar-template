@@ -1,31 +1,31 @@
-# <%= class_name.tableize %>
-$stateProvider.state('<%= class_name.tableize %>', { 
-  # state for showing all <%= class_name.tableize %>
-  url: '/<%= class_name.tableize %>',
-  templateUrl: '<%= class_name.tableize %>/index.html',
-  controller: '<%= class_name.camelize(:upper) %>ListCtrl'
-}).state('view<%= class_name.camelize(:upper) %>', { 
-  #state for showing single <%= class_name.camelize(:upper) %>
-  url: '/<%= class_name.tableize %>/:id/view',
-  templateUrl: '<%= class_name.tableize %>/show.html',
-  controller: '<%= class_name.camelize(:upper) %>ViewCtrl'
-})
-if Rails.is_admin
-  # <%= class_name.tableize %> : admin actions
-  $stateProvider.state('admin<%= class_name.camelize(:upper) %>', { 
+  # <%= class_name.tableize %>
+  $stateProvider.state('<%= class_name.tableize %>', { 
     # state for showing all <%= class_name.tableize %>
-    url: '/admin/<%= class_name.tableize %>',
-    templateUrl: '<%= class_name.tableize %>/admin.html',
+    url: '/<%= class_name.tableize %>',
+    templateUrl: '<%= class_name.tableize %>/index.html',
     controller: '<%= class_name.camelize(:upper) %>ListCtrl'
-  }).state('new<%= class_name.camelize(:upper) %>', { 
-    #state for adding a new <%= class_name.camelize(:upper) %>
-    url: '/admin/<%= class_name.tableize %>/new',
-    templateUrl: '<%= class_name.tableize %>/new.html',
-    controller: '<%= class_name.camelize(:upper) %>CreateCtrl'
-  }).state('edit<%= class_name.camelize(:upper) %>', { 
-    #state for updating a <%= class_name.camelize(:upper) %>
-    url: '/admin/<%= class_name.tableize %>/:id/edit',
-    templateUrl: '<%= class_name.tableize %>/edit.html',
-    controller: '<%= class_name.camelize(:upper) %>EditCtrl'
+  }).state('view<%= class_name.camelize(:upper) %>', { 
+    #state for showing single <%= class_name.camelize(:upper) %>
+    url: '/<%= class_name.tableize %>/:id/view',
+    templateUrl: '<%= class_name.tableize %>/show.html',
+    controller: '<%= class_name.camelize(:upper) %>ViewCtrl'
   })
-end
+  if Rails.is_admin
+    # <%= class_name.tableize %> : admin actions
+    $stateProvider.state('admin<%= class_name.camelize(:upper) %>', { 
+      # state for showing all <%= class_name.tableize %>
+      url: '/admin/<%= class_name.tableize %>',
+      templateUrl: '<%= class_name.tableize %>/admin.html',
+      controller: '<%= class_name.camelize(:upper) %>ListCtrl'
+    }).state('new<%= class_name.camelize(:upper) %>', { 
+      #state for adding a new <%= class_name.camelize(:upper) %>
+      url: '/admin/<%= class_name.tableize %>/new',
+      templateUrl: '<%= class_name.tableize %>/new.html',
+      controller: '<%= class_name.camelize(:upper) %>CreateCtrl'
+    }).state('edit<%= class_name.camelize(:upper) %>', { 
+      #state for updating a <%= class_name.camelize(:upper) %>
+      url: '/admin/<%= class_name.tableize %>/:id/edit',
+      templateUrl: '<%= class_name.tableize %>/edit.html',
+      controller: '<%= class_name.camelize(:upper) %>EditCtrl'
+    })
+  end
