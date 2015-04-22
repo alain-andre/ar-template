@@ -122,6 +122,8 @@ This will create the following files :
  - app/controllers/api/v1
   - controller.rb (Grape::API controller managing the CRUD).
 
+And add the link to the menu bar.
+
 ### Scaffolding
 Generate model, views and controller for the given arguments.
 

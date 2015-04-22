@@ -4,4 +4,5 @@
       = link_to "<%= @AppName %>", root_path, class: "navbar-brand"
     .navbar-collapse.collapse
       %ul.nav.navbar-nav.navbar-right
+        = render 'layouts/menu'
         = render 'layouts/auth'

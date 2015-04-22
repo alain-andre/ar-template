@@ -39,6 +39,16 @@ class AngularControllerGenerator <  Rails::Generators::NamedBase
     end
   end
 
+  # Add the link to the menu
+  def add_menu
+    tmp_file = "app/views/layouts/_menu.html.haml"
+    if FileTest.exists?(tmp_file) then
+      open(tmp_file, 'a') { |f|
+        f.puts ERB.new("\n%li=link_to('#{class_name.tableize}', '/##{class_name.tableize}')").result(binding)
+      }
+    end
+  end
+
   # Creates the angularjs controller
   def create_angular_controller
     @AppName = Rails.application.class.name.split('::').first

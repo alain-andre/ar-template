@@ -34,6 +34,7 @@ FileUtils.rm("app/views/layouts/application.html.erb")
 template "#{filesDir}/app/views/layouts/_auth.html.haml", "app/views/layouts/_auth.html.haml"
 template "#{filesDir}/app/views/layouts/_messages.html.haml", "app/views/layouts/_messages.html.haml"
 template "#{filesDir}/app/views/layouts/_navbar.html.haml.erb", "app/views/layouts/_navbar.html.haml"
+template "#{filesDir}/app/views/layouts/_menu.html.haml", "app/views/layouts/_menu.html.haml"
 git add: "-A"
 git commit: '-m "Templating de app/views/layouts/"'
 
