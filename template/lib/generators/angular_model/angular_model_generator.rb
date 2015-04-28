@@ -12,6 +12,6 @@ class AngularModelGenerator < Rails::Generators::NamedBase
 
   # Creates the ruby model
   def create_rb_model
-    template "models/model.rb", "app/models/#{class_name.underscore}.rb"
+    template "models/model.rb", "app/models/#{class_name.underscore.singularize}.rb"
   end
 end
