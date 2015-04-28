@@ -19,8 +19,8 @@ task :new_app, :directory do |t, args|
         generate_rspec if ask("Generate rspec installation?", ['y', 'n']) == 'y'
         if ask("Add devise gem amd configure it?", ['y', 'n']) == 'y'
           generate_user(package_dir)
-          add_role if ask("Add role to the user model?", ['y', 'n']) == 'y'
-          auth_browserid if ask("Add browserid authentication?", ['y', 'n']) == 'y'
+          add_role(package_dir) if ask("Add role to the user model?", ['y', 'n']) == 'y'
+          auth_browserid(package_dir) if ask("Add browserid authentication?", ['y', 'n']) == 'y'
         end
         angular_scaffold if ask("Generate angular scaffolding?", ['y', 'n']) == 'y'
       end
@@ -60,33 +60,47 @@ def generate_user(package_dir)
   text.gsub!(/config.action_mailer.raise_delivery_errors \= false/, 
     "config.action_mailer.raise_delivery_errors = false\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }")
   File.open(file, 'w') { |f| f.puts text }
-
   system "rails generate devise User"
-  dest = "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
-  File.new(dest, "w")
-  FileUtils.cp "#{package_dir}/template/db/migrate/add_role_to_users.rb", dest
 
   system "git add -A"
   system "git commit -m 'Add devise and configure it'"
 end
 
-# Add roles to user and run the migration
-def add_role
+# Add roles to user and create an admin
+# @param package_dir : The package/template directory
+def add_role(package_dir)
   file = 'app/models/user.rb'
   text=File.open(file).read
   text.gsub!(/Base/, 
     "Base\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n")
   File.open(file, 'w') { |f| f.puts text }
 
+  dest = "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
+  File.new(dest, "w")
+  FileUtils.cp "#{package_dir}/template/db/migrate/add_role_to_users.rb", dest
   system "rake db:migrate"
-  File.open('db/seeds.rb', 'a') { |f| f.puts "\nUser.last.update(:role => 1)" }
+
+  file = 'db/seeds.rb'
+  open(file, 'a') { |f| f.puts File.read("#{package_dir}/template/#{file}") }
+  system "bundle exec figaro install"
+
+  admin_user = get_stdin("What's the email of the admin user ? ")
+  file = 'config/application.yml'
+  open(file, 'a') { |f| f.puts "ADMIN_EMAIL: #{admin_user}" }
+  system "rake db:seed"
+
+  puts "============================================================"
+  puts "Remember You can modify this email in config/application.yml"
+  puts "============================================================"
 
   system "git add -A"
   system "git commit -m 'Add roles to user'"
 end
 
 # Plug a browserid authentication into the project using it's generator
-def auth_browserid
+# @param package_dir : The package/template directory
+# @params has_admins
+def auth_browserid(package_dir)
   file = 'Gemfile'
   text=File.open(file).read
   text.gsub!(/gem 'devise'/, 
@@ -96,6 +110,9 @@ def auth_browserid
     system "bundle install"
   end
   system "rails g auth_browserid"
+  
+  system "git add -A"
+  system "git commit -m 'Add browserid_authentication'"
 end
 
 # Plug a scaffoled angular object into the project using it's generator
