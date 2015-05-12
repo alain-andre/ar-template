@@ -35,6 +35,7 @@ template "#{filesDir}/app/views/layouts/_auth.html.haml", "app/views/layouts/_au
 template "#{filesDir}/app/views/layouts/_messages.html.haml", "app/views/layouts/_messages.html.haml"
 template "#{filesDir}/app/views/layouts/_navbar.html.haml.erb", "app/views/layouts/_navbar.html.haml"
 template "#{filesDir}/app/views/layouts/_menu.html.haml", "app/views/layouts/_menu.html.haml"
+template "#{filesDir}/app/views/layouts/_admin_menu.html.haml", "app/views/layouts/_admin_menu.html.haml"
 git add: "-A"
 git commit: '-m "Templating de app/views/layouts/"'
 

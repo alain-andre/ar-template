@@ -49,6 +49,22 @@ class AngularControllerGenerator <  Rails::Generators::NamedBase
     end
   end
 
+  #Add the link to the admin menu
+  def add_admin_menu
+    tmp_file = "app/views/layouts/_admin_menu.html.haml"
+    if FileTest.exists?(tmp_file) then
+      open(tmp_file, 'a') { |f|
+        f.puts ERB.new("\n\s{4}%li{ 'role'=>'presentation' }=link_to('#{class_name.tableize}', '/#admin/#{class_name.tableize}')").result(binding)
+      }
+    end
+    local_file = "app/config/locales/en.yml"
+    if FileTest.exists?(tmp_file) then
+      open(tmp_file, 'a') { |f|
+        f.puts ERB.new("\n\s{2}admin_menu: 'Administration menu').result(binding)
+      }
+    end
+  end
+
   # Creates the angularjs controller
   def create_angular_controller
     @AppName = Rails.application.class.name.split('::').first
