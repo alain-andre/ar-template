@@ -54,13 +54,13 @@ class AngularControllerGenerator <  Rails::Generators::NamedBase
     tmp_file = "app/views/layouts/_admin_menu.html.haml"
     if FileTest.exists?(tmp_file) then
       open(tmp_file, 'a') { |f|
-        f.puts ERB.new("\n\s{4}%li{ 'role'=>'presentation' }=link_to('#{class_name.tableize}', '/#admin/#{class_name.tableize}')").result(binding)
+        f.puts ERB.new("\n\s\s\s\s%li{ 'role'=>'presentation' }=link_to('#{class_name.tableize}', '/#admin/#{class_name.tableize}')").result(binding)
       }
     end
-    local_file = "app/config/locales/en.yml"
+    tmp_file = "config/locales/en.yml"
     if FileTest.exists?(tmp_file) then
       open(tmp_file, 'a') { |f|
-        f.puts ERB.new("\n\s{2}admin_menu: 'Administration menu').result(binding)
+        f.puts ERB.new("\n\s\sadmin_menu: 'Administration menu'").result(binding)
       }
     end
   end

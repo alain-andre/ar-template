@@ -64,6 +64,7 @@ git commit: '-m "Templating de config/application.rb"'
 template "#{filesDir}/app/assets/javascripts/controllers/pages_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/pages_ctrl.js.coffee"
 template "#{filesDir}/app/assets/javascripts/controllers/heads_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/heads_ctrl.js.coffee"
 template "#{filesDir}/app/assets/javascripts/controllers/flashs_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/flashs_ctrl.js.coffee"
+template "#{filesDir}/app/assets/javascripts/controllers/nav_bar_ctrl.js.coffee.erb", "app/assets/javascripts/controllers/nav_bar_ctrl.js.coffee"
 template "#{filesDir}/app/assets/javascripts/services/.keep", "app/assets/javascripts/services/.keep"
 template "#{filesDir}/app/assets/javascripts/init.js.coffee.erb", "app/assets/javascripts/init.js.coffee"
 template "#{filesDir}/app/assets/javascripts/routes.js.coffee.erb", "app/assets/javascripts/routes.js.coffee"
