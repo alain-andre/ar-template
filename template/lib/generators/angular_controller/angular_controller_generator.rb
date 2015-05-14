@@ -71,4 +71,10 @@ class AngularControllerGenerator <  Rails::Generators::NamedBase
     template "assets/javascripts/controller.js.erb", "app/assets/javascripts/controllers/#{class_name.tableize}_ctrl.js"
     template "assets/javascripts/service.js.erb", "app/assets/javascripts/services/#{class_name.tableize}_srv.js.coffee"
   end
+
+  # Add to git
+  def add_to_git
+    run "git add -A"
+    run "git commit -m 'Generated angular controller for #{class_name}'"
+  end
 end

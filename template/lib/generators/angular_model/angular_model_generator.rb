@@ -14,4 +14,10 @@ class AngularModelGenerator < Rails::Generators::NamedBase
   def create_rb_model
     template "models/model.rb", "app/models/#{class_name.underscore.singularize}.rb"
   end
+
+  # Add to git
+  def add_to_git
+    run "git add -A"
+    run "git commit -m 'Generated angular model for #{class_name}'"
+  end
 end

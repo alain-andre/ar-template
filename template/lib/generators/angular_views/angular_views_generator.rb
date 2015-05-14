@@ -17,5 +17,10 @@ class AngularViewsGenerator < Rails::Generators::NamedBase
     template "config/locales/en.rb", "config/locales/#{class_name.underscore}.en.yml"
   end
 
+  # Add to git
+  def add_to_git
+    run "git add -A"
+    run "git commit -m 'Generated angular views for #{class_name}'"
+  end
 
 end

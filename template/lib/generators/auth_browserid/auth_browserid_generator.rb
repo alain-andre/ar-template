@@ -74,4 +74,10 @@ class AuthBrowseridGenerator < Rails::Generators::Base
     template file, file
   end
 
+  # Add to git
+  def add_to_git
+    run "git add -A"
+    run "git commit -m 'Generated browserid authentication for the app.'"
+  end
+
 end
