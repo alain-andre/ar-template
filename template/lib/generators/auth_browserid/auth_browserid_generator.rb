@@ -68,7 +68,7 @@ class AuthBrowseridGenerator < Rails::Generators::Base
   # It will create the partial 'layouts/auth_browserid' showing a BrowserId button
   def render_the_login
     file = 'app/views/layouts/_auth.html.haml'
-    template file, file
+    template file, file, force: true
 
     file = 'app/views/layouts/_auth_browserid.html.haml'
     template file, file
