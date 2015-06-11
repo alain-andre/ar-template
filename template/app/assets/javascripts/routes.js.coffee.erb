@@ -1,4 +1,4 @@
-angular.module('<%= @AppName %>').config ($stateProvider, $urlRouterProvider, Rails) ->
+angular.module('<%= @AppName %>').config ($stateProvider, $urlRouterProvider) ->
   $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('home', {

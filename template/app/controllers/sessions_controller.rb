@@ -5,7 +5,7 @@ class SessionsController < Devise::SessionsController
     self.resource = warden.authenticate!(auth_options)
     sign_in(resource_name, resource)
     if current_user
-      render :json => {:status => true, :user => @user.to_json}
+      render :json => {:status => true, :role => is_admin?}
     else
       render :json => {:status => false}
     end
@@ -15,9 +15,9 @@ class SessionsController < Devise::SessionsController
   def destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
     if signed_out
-      render :json => {:status => true}
+      render :json => {:status => false}
     else
-      render :json => {:status => false, :user => @user.to_json}
+      render :json => {:status => true, :role => is_admin?}
     end
   end
 

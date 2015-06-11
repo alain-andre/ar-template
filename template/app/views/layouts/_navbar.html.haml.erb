@@ -1,9 +1,9 @@
-.navbar.navbar-default.navbar-static-top{ "role" => "navigation", "ng-controller" => "NavBarCtrl" }
+.navbar.navbar-default.navbar-static-top{ "role" => "navigation" }
   .container
     .navbar-header
       = link_to "<%= @AppName %>", root_path, class: "navbar-brand"
     .navbar-collapse.collapse
-      %ul.nav.navbar-nav.navbar-right
+      %ul.nav.navbar-nav.navbar-right{ "ng-controller" => "BrowseridCtrl" }
         = render 'layouts/admin_menu'
         = render 'layouts/menu'
         = render 'layouts/auth'

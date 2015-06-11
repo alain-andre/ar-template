@@ -11,7 +11,8 @@ module JsEnv
   def js_env
     data = {
       env: Rails.env,
-      is_admin: is_admin?,
+      is_admin: false,
+      current_user: false,
       templates: templates
     }
 

@@ -1,21 +1,25 @@
-angular.module("<%= @AppName %>").controller "BrowseridCtrl", ($scope, $http) ->
-  $scope.myData = {};
+angular.module("TestApp").controller "BrowseridCtrl", ($scope, $http, Rails, $element) ->
+  $scope.current_user = Rails.current_user
+  $scope.is_admin = Rails.is_admin
+
+  $scope.myData = {}
   $scope.myData.doClick = (item, event) ->
-    event.preventDefault();
+    event.preventDefault()
     if (item == 'signout')
       responsePromise = $http.delete('/users/sign_out')
       responsePromise.success (data, status, headers, config) ->
-        window.location.href = '/'
-        console.log(data)
+        $scope.current_user = data.status
+        $scope.is_admin = data.role
       responsePromise.error (data, status, headers, config) ->
-        window.location.href = '/'
         console.log(data)
     else
       navigator.id.get (assertion) ->
         if (assertion)
           responsePromise = $http.post("/users/sign_in", {"assertion": assertion}, {cache: false});
           responsePromise.success (data, status, headers, config) ->
-            window.location.href = '/'
+            $scope.current_user = data.status
+            $scope.is_admin = data.role
             console.log(data)
           responsePromise.error (data, status, headers, config) ->
             console.log(data)
+            
