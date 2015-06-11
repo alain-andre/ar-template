@@ -55,11 +55,9 @@ end
 def generate_user(package_dir)
   system "rails generate devise:install"
 
-  file = 'config/environments/development.rb'
-  text=File.open(file).read
-  text.gsub!(/config.action_mailer.raise_delivery_errors \= false/, 
+  replace('config/environments/development.rb',
+    "config.action_mailer.raise_delivery_errors \= false",
     "config.action_mailer.raise_delivery_errors = false\n\tconfig.action_mailer.default_url_options = { host: 'localhost:3000' }")
-  File.open(file, 'w') { |f| f.puts text }
   system "rails generate devise User"
 
   # make the authentication return a json
@@ -67,11 +65,7 @@ def generate_user(package_dir)
   File.new(dest, "w")
   FileUtils.cp "#{package_dir}/template/#{dest}", dest
 
-  file = 'config/routes.rb'
-  text=File.open(file).read
-  text.gsub!(/devise_for :users/, 
-    "devise_for :users, :controllers => { sessions: 'sessions' } ")
-  File.open(file, 'w') { |f| f.puts text }
+  replace('config/routes.rb', 'devise_for :users', "devise_for :users, :controllers => { sessions: 'sessions' } ")
 
   system "git add -A"
   system "git commit -m 'Add devise and configure it'"
@@ -80,11 +74,9 @@ end
 # Add roles to user and create an admin
 # @param package_dir : The package/template directory
 def add_role(package_dir)
-  file = 'app/models/user.rb'
-  text=File.open(file).read
-  text.gsub!(/Base/, 
+  replace('app/models/user.rb',
+    "Base",
     "Base\n  enum role: [:default_user, :admin]\n  before_validation :set_default_role, :if => :new_record?\n  # Return true if User is an Admin\n  def is_admin?\n    self.role == \"admin\" ? true : false\n  end\n  # Define the default role\n  def set_default_role\n    self.role ||= :default_user\n  end\n")
-  File.open(file, 'w') { |f| f.puts text }
 
   dest = "db/migrate/#{Time.now.strftime("%Y%m%d%H%M%S")}_add_role_to_users.rb"
   File.new(dest, "w")
@@ -112,11 +104,10 @@ end
 # @param package_dir : The package/template directory
 # @params has_admins
 def auth_browserid(package_dir)
-  file = 'Gemfile'
-  text=File.open(file).read
-  text.gsub!(/gem 'devise'/, 
+  replace('Gemfile',
+    "gem 'devise'",
     "gem 'devise'\ngem 'devise_browserid_authenticatable'")
-  File.open(file, 'w') { |f| f.puts text }
+  
   Bundler.with_clean_env do
     system "bundle install"
   end
@@ -153,4 +144,16 @@ def ask(message, valid_options)
     answer = get_stdin(message)
   end
   answer
+end
+
+# Replace in a file the original text by the new one
+# @param file : The file to modify
+# @param original_text : The original text
+# @param new_text : The text to replace with
+def replace(file, original_text, new_text)
+  text=File.open(file).read
+  puts text
+  text.gsub!("#{original_text}", "#{new_text}")
+  File.open(file, 'w') { |f| f.puts text }
+  puts text
 end
