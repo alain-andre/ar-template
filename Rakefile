@@ -62,6 +62,17 @@ def generate_user(package_dir)
   File.open(file, 'w') { |f| f.puts text }
   system "rails generate devise User"
 
+  # make the authentication return a json
+  dest = "app/controllers/sessions_controller.rb"
+  File.new(dest, "w")
+  FileUtils.cp "#{package_dir}/template/#{dest}", dest
+
+  file = 'config/routes.rb'
+  text=File.open(file).read
+  text.gsub!(/devise_for :users/, 
+    "devise_for :users, :controllers => { sessions: 'sessions' } ")
+  File.open(file, 'w') { |f| f.puts text }
+
   system "git add -A"
   system "git commit -m 'Add devise and configure it'"
 end
