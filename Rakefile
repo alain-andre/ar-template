@@ -152,8 +152,6 @@ end
 # @param new_text : The text to replace with
 def replace(file, original_text, new_text)
   text=File.open(file).read
-  puts text
   text.gsub!("#{original_text}", "#{new_text}")
   File.open(file, 'w') { |f| f.puts text }
-  puts text
 end
