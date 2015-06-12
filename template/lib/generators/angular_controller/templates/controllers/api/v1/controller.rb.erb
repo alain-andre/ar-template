@@ -7,7 +7,7 @@ module API
       helpers do
         # Never trust parameters from the scary internet, only allow the white list through.
         def <%= class_name.underscore %>_params
-          declared(params, include_missing: false)
+          declared(params, include_missing: true).to_hash
         end
       end
 
@@ -15,7 +15,7 @@ module API
 
         desc "Return list of <%= class_name.tableize%>"
         get do
-          <%= class_name.camelize(:upper) %>.all # obviously you never want to call #all here
+          <%= class_name.camelize(:upper).singularize %>.all # obviously you never want to call #all here
         end
 
         desc "Return a <%= class_name.underscore %>."
@@ -24,7 +24,7 @@ module API
         end
         route_param :id do
           get do
-            <%= class_name.camelize(:upper) %>.find(params[:id])
+            <%= class_name.camelize(:upper).singularize %>.find(params[:id])
           end
         end
 
@@ -40,7 +40,7 @@ module API
         end
         post do
           admin!
-          <%= class_name.camelize(:upper) %>.create!(<%= class_name.underscore %>_params)
+          <%= class_name.camelize(:upper).singularize %>.create!(<%= class_name.underscore %>_params)
         end
 
         desc "Update a <%= class_name.underscore %>."
@@ -56,7 +56,7 @@ module API
         end
         put do
           admin!
-          <%= class_name.camelize(:upper) %>.find(params[:id]).update(<%= class_name.underscore %>_params)
+          <%= class_name.camelize(:upper).singularize %>.find(params[:id]).update(<%= class_name.underscore %>_params)
         end
 
         desc "Delete a <%= class_name.underscore %>."
@@ -65,7 +65,7 @@ module API
         end
         delete ':id' do
           admin!
-          <%= class_name.camelize(:upper) %>.find(params[:id]).destroy
+          <%= class_name.camelize(:upper).singularize %>.find(params[:id]).destroy
         end
 
       end

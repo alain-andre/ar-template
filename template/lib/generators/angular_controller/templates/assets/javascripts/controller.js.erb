@@ -1,27 +1,27 @@
 angular.module('<%= @AppName %>')
   .controller('<%= class_name.camelize(:upper) %>ListCtrl', function($scope, $state, <%= class_name.camelize(:upper) %>) {
-  $scope.<%= class_name.underscore %>s = <%= class_name.camelize(:upper) %>.query(); //fetch all <%= class_name.underscore %>s. Issues a GET to /api/<%= class_name.underscore %>s
+  $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.query(); //fetch all <%= class_name.underscore %>. Issues a GET to /api/<%= class_name.underscore %>
 })
 .controller('<%= class_name.camelize(:upper) %>ViewCtrl', function($scope, $stateParams, <%= class_name.camelize(:upper) %>) {
-  $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id }); //Get a single <%= class_name.underscore %>.Issues a GET to /api/<%= class_name.underscore %>s/:id
+  $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id }); //Get a single <%= class_name.underscore %>.Issues a GET to /api/<%= class_name.underscore %>/:id
 })
 .controller('<%= class_name.camelize(:upper) %>CreateCtrl', function($scope, $state, $stateParams, <%= class_name.camelize(:upper) %>) {
   $scope.<%= class_name.underscore %> = new <%= class_name.camelize(:upper) %>();  //create new <%= class_name.underscore %> instance. Properties will be set via ng-model on UI
  
-  $scope.add<%= class_name.camelize(:upper) %> = function() { //create a new <%= class_name.underscore %>. Issues a POST to /api/<%= class_name.underscore %>s
+  $scope.add<%= class_name.camelize(:upper) %> = function() { //create a new <%= class_name.underscore %>. Issues a POST to /api/<%= class_name.underscore %>
     $scope.<%= class_name.underscore %>.$save(function() {
       $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
     });
   };
 })
 .controller('<%= class_name.camelize(:upper) %>EditCtrl', function($scope, $state, $stateParams, $window, <%= class_name.camelize(:upper) %>) {
-  $scope.update<%= class_name.camelize(:upper) %> = function() { //Update the edited <%= class_name.underscore %>. Issues a PUT to /api/<%= class_name.underscore %>s/:id
+  $scope.update<%= class_name.camelize(:upper) %> = function() { //Update the edited <%= class_name.underscore %>. Issues a PUT to /api/<%= class_name.underscore %>/:id
     $scope.<%= class_name.underscore %>.$update(function() {
       $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
     });
   };
   
-  $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>s/:id
+  $scope.delete<%= class_name.camelize(:upper) %> = function(<%= class_name.underscore %>) { // Delete a <%= class_name.underscore %>. Issues a DELETE to /api/<%= class_name.underscore %>/:id
     if ($window.confirm('Really delete this?')) {
       <%= class_name.underscore %>.$delete({'id': <%= class_name.underscore %>.id}, function() {
         $state.go('admin<%= class_name.camelize(:upper) %>'); // on success go back to admin home i.e. admin<%= class_name.camelize(:upper) %> state.
@@ -29,7 +29,7 @@ angular.module('<%= @AppName %>')
     }
   };
   
-  $scope.load<%= class_name.camelize(:upper) %> = function() { //Issues a GET request to /api/<%= class_name.underscore %>s/:id to get a <%= class_name.underscore %> to update
+  $scope.load<%= class_name.camelize(:upper) %> = function() { //Issues a GET request to /api/<%= class_name.underscore %>/:id to get a <%= class_name.underscore %> to update
     $scope.<%= class_name.underscore %> = <%= class_name.camelize(:upper) %>.get({ id: $stateParams.id });
   };
  
